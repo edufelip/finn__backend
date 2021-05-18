@@ -9,7 +9,8 @@
     "nodemon": "^2.0.7"
   },
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "test": "jest --env node"
   },
   "dependencies": {
     "axios": "^0.21.1",
