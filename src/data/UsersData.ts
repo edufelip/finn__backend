@@ -8,7 +8,7 @@ export class UsersData implements IUserMethods {
   }
 
   saveUser(user: UserModel) {
-    return database.one('INSERT INTO users(id, name, email, password) VALUES(${id} ,${name}, ${email}, ${password}) RETURNING id, name, email',
+    return database.one('INSERT INTO users(id, name) VALUES(${id} ,${name}) RETURNING id, name',
       user)
   }
 
@@ -18,7 +18,7 @@ export class UsersData implements IUserMethods {
   }
 
   updateUser(user: UserModel, id: string) {
-    return database.one('UPDATE users SET password=${password} WHERE id = ${id} RETURNING id, name, email',
+    return database.one('UPDATE users SET name=${name} WHERE id = ${id} RETURNING id, name',
       { ...user, id: id })
   }
 
