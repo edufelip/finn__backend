@@ -7,7 +7,7 @@ export interface IUserMethods {
 
     getSingleUser: (id: string) => Promise<UserModel>
 
-    updateUser: (user: UserModel, id: string) => Promise<UserModel>
+    updateUser: (id: string, name: string) => Promise<UserModel>
 
     deleteUser: (id: string) => Promise<null>
 }

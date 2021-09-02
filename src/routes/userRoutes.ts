@@ -1,5 +1,10 @@
 import { Router } from 'express'
-import { usersService } from '../service/usersService'
+import { UsersService } from '../service/usersService'
+import { UsersData } from '../data/UsersData'
+import database from '../infra/database'
+
+const usersData = new UsersData(database)
+const usersService = new UsersService(usersData)
 const router = Router()
 
 router.get('/', async function(req, res) {
@@ -14,26 +19,26 @@ router.get('/:id', async function(req, res) {
 })
 
 router.post('/', async function(req, res) {
-  const user = req.body // id, email, name, password
+  const user = req.body
   const newUser = await usersService.saveUser(user)
-  res.json(newUser)
+  res.status(201).json(newUser)
 })
 
 router.put('/:id', async function(req, res) {
   const id = req.params.id
-  const user = req.body
-  const updatedUser = await usersService.updateUser(user, id)
-  res.json(updatedUser)
+  const userToUpdate = req.body
+  try {
+    await usersService.updateUser(id, userToUpdate.name)
+    res.status(204).end()
+  } catch (e) {
+    res.status(404).send(e.message)
+  }
 })
 
 router.delete('/:id', async function(req, res) {
   const id = req.params.id
-  try {
-    await usersService.deleteUser(id)
-  } catch (err) {
-    return res.status(502).json('error on delete')
-  }
-  return res.status(200).json('successfully deleted')
+  await usersService.deleteUser(id)
+  return res.status(204).json('successfully deleted')
 })
 
 export default router

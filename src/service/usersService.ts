@@ -2,8 +2,8 @@ import { UserModel } from '@models/UserModel'
 import { UsersData } from 'src/data/UsersData'
 import { IUserMethods } from 'src/interfaces/IUserMethods'
 
-class UsersService implements IUserMethods {
-  private readonly usersData: UsersData
+export class UsersService implements IUserMethods {
+  private readonly usersData: IUserMethods
 
   constructor(usersData: UsersData) {
     this.usersData = usersData
@@ -17,20 +17,18 @@ class UsersService implements IUserMethods {
     return this.usersData.saveUser(user)
   }
 
-  getSingleUser(id: string) {
-    return this.usersData.getSingleUser(id)
+  async getSingleUser(id: string) {
+    const user = await this.usersData.getSingleUser(id)
+    if (!user) throw new Error('User not found')
+    return user
   }
 
-  updateUser(user: UserModel, id: string) {
-    return this.usersData.updateUser(user, id)
+  async updateUser(id: string, name: string) {
+    await this.getSingleUser(id)
+    return this.usersData.updateUser(id, name)
   }
 
   deleteUser(id: string) {
     return this.usersData.deleteUser(id)
   }
 }
-
-const usersData = new UsersData()
-const usersService = new UsersService(usersData)
-
-export { usersService }

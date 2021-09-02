@@ -1,29 +1,31 @@
 import { UserModel } from '@models/UserModel'
 import { IUserMethods } from 'src/interfaces/IUserMethods'
-import database from '../infra/database'
 
 export class UsersData implements IUserMethods {
+  public db
+  constructor(database) {
+    this.db = database
+  }
+
   getUsers() {
-    return database.query('SELECT * FROM users')
+    return this.db.query('SELECT * FROM users')
   }
 
   saveUser(user: UserModel) {
-    return database.one('INSERT INTO users(id, name) VALUES(${id} ,${name}) RETURNING id, name',
-      user)
+    return this.db.one('INSERT INTO users(id, name) VALUES(${id} ,${name}) RETURNING id, name', user)
   }
 
   getSingleUser(id: string) {
-    return database.one('SELECT * FROM users WHERE id = ${id}',
+    return this.db.one('SELECT * FROM users WHERE id = ${id}',
       { id: id })
   }
 
-  updateUser(user: UserModel, id: string) {
-    return database.one('UPDATE users SET name=${name} WHERE id = ${id} RETURNING id, name',
-      { ...user, id: id })
+  updateUser(id: string, name: string) {
+    return this.db.one('UPDATE users SET name=${name} WHERE id = ${id} RETURNING id, name', { name: name, id: id })
   }
 
   deleteUser(id: string) {
-    return database.none('DELETE FROM users WHERE id = ${id}',
+    return this.db.none('DELETE FROM users WHERE id = ${id}',
       { id: id })
   }
 }
