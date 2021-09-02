@@ -8,17 +8,17 @@ class MainApp {
   constructor() {
     this.express = express()
     this.middlewares()
-    this.routes()
+    this.setRoutes()
   }
 
   middlewares() {
     this.express.use(express.json())
   }
 
-  routes() {
+  setRoutes() {
     this.express.use('/users', userRoutes)
   }
 }
 
 const app = new MainApp().express
-export { app }
+export default app
