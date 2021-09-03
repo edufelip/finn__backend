@@ -2,7 +2,6 @@ import request from 'supertest'
 import app from '../index'
 import faker from 'faker'
 import database from '../infra/database'
-import { response } from 'express'
 
 const fakeUser = {
   id: faker.datatype.uuid(),
@@ -42,14 +41,13 @@ describe('User Operations', () => {
 
   it('should create an user', async () => {
     const newUser = {
-      id: faker.datatype.uuid(),
+      id: '1',
       name: faker.internet.userName()
     }
 
     await request(app)
-      .post('/users/')
+      .post('/users')
       .send(newUser)
-      .expect('Content-Type', /json/)
       .expect(201)
       .then(response => {
         expect(response.body.id).toBe(newUser.id)
@@ -78,7 +76,7 @@ describe('User Operations', () => {
       })
   })
 
-  it.only('should NOT update an user', async () => {
+  it('should NOT update an user', async () => {
     const newUser = {
       id: faker.datatype.uuid(),
       name: 'Random Name'
