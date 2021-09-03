@@ -19,7 +19,10 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@models/*": ["./src/models/*"]
+      "@models/*": ["./src/models/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@data/*": ["./src/data/*"],
+      "@service/*": ["./src/service/*"]
     }
   },
   "include": [
