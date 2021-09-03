@@ -1,3 +1,5 @@
+import { IDatabase } from 'pg-promise'
+
 const pgp = require('pg-promise')({})
 require('dotenv').config()
 
@@ -10,6 +12,6 @@ const dbData = {
   password: process.env.DB_PASSWORD
 }
 
-const database = pgp(dbData)
+const database: IDatabase<null> = pgp(dbData)
 
 export default database
