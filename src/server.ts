@@ -1,5 +1,6 @@
 import app from './index'
 
-app.listen(3333, () => {
-  console.log('The server has been started')
+const port = 3333
+app.listen(port, () => {
+  console.log('The server has been started on port ' + port)
 })
