@@ -18,8 +18,7 @@ class UserData implements IUserMethods {
   }
 
   getSingleUser(id: string) {
-    return this.db.oneOrNone('SELECT * FROM users WHERE id = ${id}',
-      { id: id })
+    return this.db.oneOrNone('SELECT * FROM users WHERE id = ${id}', { id: id })
   }
 
   updateUser(id: string, name: string) {
@@ -27,8 +26,7 @@ class UserData implements IUserMethods {
   }
 
   deleteUser(id: string) {
-    return this.db.none('DELETE FROM users WHERE id = ${id}',
-      { id: id })
+    return this.db.none('DELETE FROM users WHERE id = ${id}', { id: id })
   }
 }
 
