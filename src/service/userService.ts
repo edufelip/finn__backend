@@ -5,7 +5,7 @@ import { IUserMethods } from 'src/interfaces/IUserMethods'
 class UserService implements IUserMethods {
   private readonly userData: IUserMethods
 
-  constructor(userData) {
+  constructor(userData: IUserMethods) {
     this.userData = userData
   }
 
@@ -14,6 +14,10 @@ class UserService implements IUserMethods {
   }
 
   async saveUser(user: UserModel) {
+    const found_user = await this.userData.getSingleUser(user.id)
+    if (found_user) {
+      throw new Error('User already exists')
+    }
     return this.userData.saveUser(user)
   }
 

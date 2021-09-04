@@ -15,8 +15,8 @@ router.get('/', async function(req: Request, res: Response, next) {
 router.get('/:id', async function(req: Request, res: Response, next) {
   const id = req.params.id
   try {
-    const foundUser = await userService.getSingleUser(id)
-    res.json(foundUser)
+    const found_user = await userService.getSingleUser(id)
+    res.json(found_user)
   } catch (e) {
     next(e)
   }
@@ -25,8 +25,8 @@ router.get('/:id', async function(req: Request, res: Response, next) {
 router.post('/', async function(req: Request, res: Response, next) {
   const user = req.body
   try {
-    const newUser = await userService.saveUser(user)
-    res.status(201).json(newUser)
+    const new_user = await userService.saveUser(user)
+    res.status(201).json(new_user)
   } catch (e) {
     next(e)
   }
@@ -34,9 +34,9 @@ router.post('/', async function(req: Request, res: Response, next) {
 
 router.put('/:id', async function(req: Request, res: Response, next) {
   const id = req.params.id
-  const userToUpdate = req.body
+  const user_to_update = req.body
   try {
-    await userService.updateUser(id, userToUpdate.name)
+    await userService.updateUser(id, user_to_update.name)
     res.status(204).end()
   } catch (e) {
     next(e)

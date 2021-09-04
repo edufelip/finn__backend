@@ -5,15 +5,15 @@ import database from '../infra/database'
 
 const fakeUser = {
   id: faker.datatype.uuid(),
-  name: faker.internet.userName()
+  name: `${faker.name.firstName()} ${faker.name.lastName()}`
 }
 
-describe('User Operations', () => {
+describe.only('User Operations', () => {
   beforeAll(async () => {
     await database.query('create table users (id text primary key,name text not null,date timestamp default now());')
   })
   beforeEach(async () => {
-    await database.query('INSERT INTO users(id, name) VALUES(${id} ,${name}) RETURNING id, name', fakeUser)
+    await database.query('INSERT INTO users(id, name) VALUES(${id}, ${name})', fakeUser)
   })
   afterAll(async () => {
     await database.query('drop table users;')
@@ -29,7 +29,7 @@ describe('User Operations', () => {
       .expect(200)
   })
 
-  it('Should get a single user', async () => {
+  it('Should get an user', async () => {
     await request(app)
       .get(`/users/${fakeUser.id}`)
       .expect(200)
@@ -39,12 +39,17 @@ describe('User Operations', () => {
       })
   })
 
+  it('Should NOT get an user', async () => {
+    await request(app)
+      .get(`/users/${fakeUser.id}1`)
+      .expect(404)
+  })
+
   it('should create an user', async () => {
     const newUser = {
-      id: '1',
+      id: faker.datatype.uuid(),
       name: faker.internet.userName()
     }
-
     await request(app)
       .post('/users')
       .send(newUser)
@@ -53,6 +58,13 @@ describe('User Operations', () => {
         expect(response.body.id).toBe(newUser.id)
         expect(response.body.name).toBe(newUser.name)
       })
+  })
+
+  it('should NOT create an user', async () => {
+    await request(app)
+      .post('/users')
+      .send(fakeUser)
+      .expect(409)
   })
 
   it('should update an user', async () => {
@@ -95,10 +107,7 @@ describe('User Operations', () => {
 
     // then search
     await request(app)
-      .get('/users')
-      .expect(200)
-      .then(response => {
-        expect(response.body).toEqual([])
-      })
+      .get(`/users/${fakeUser.id}`)
+      .expect(404)
   })
 })
