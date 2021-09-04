@@ -1,12 +1,12 @@
 const { compilerOptions } = require('./tsconfig.json')
-const { pathsToModuleNameMapper } = require('ts-jest')
+const { pathsToModuleNameMapper } = require('ts-jest/utils')
 
 module.exports = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
   // Stop running tests after `n` failures
-  // bail: 0,
+  bail: 1,
 
   // The directory where Jest should store its cached dependency information
   // cacheDirectory: "C:\\Users\\edu_f\\AppData\\Local\\Temp\\jest",
