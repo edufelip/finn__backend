@@ -1,7 +1,7 @@
 import { PostModel } from '@models/PostModel'
 
 export interface IPostMethods {
-    getPostsFeed: (id: string) => Promise<PostModel[]>
+    getPostsFeed: (id: string, page: string) => Promise<PostModel[]>
 
     getPostsFromUser: (id: string) => Promise<PostModel[]>
 
@@ -14,4 +14,10 @@ export interface IPostMethods {
     updatePost: (id: string, post: PostModel) => Promise<PostModel>
 
     deletePost: (id: string) => Promise<PostModel>
+
+    increaseLikePost: (user_id: string, post_id: string) => Promise<PostModel>
+
+    decreaseLikePost: (user_id: string, post_id: string) => Promise<PostModel>
+
+    getLikeCount: (post_id: string) => Promise<number>
 }
