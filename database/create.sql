@@ -19,7 +19,6 @@ create table posts (
     id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     content TEXT NOT NULL,
 	image TEXT,
-	likes_count INT,
 	user_id TEXT,
 	community_id INT,
 	date TIMESTAMP DEFAULT now(),
@@ -51,3 +50,13 @@ CREATE TABLE userscommunities (
 	CONSTRAINT community_belongsToMany_users
 		FOREIGN KEY (community_id) REFERENCES communities (id) ON DELETE CASCADE 
 );
+
+CREATE TABLE likes (
+	id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	user_id TEXT,
+	post_id INT,
+	CONSTRAINT user_likes_post
+		FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+	CONSTRAINT post_has_likes
+		FOREIGN KEY (community_id) REFERENCES communities (id) ON DELETE CASCADE
+)
