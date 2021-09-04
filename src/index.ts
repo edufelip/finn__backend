@@ -2,6 +2,8 @@
 import express from 'express'
 import userRoutes from './routes/userRoutes'
 import postRoutes from './routes/postRoutes'
+import communityRoutes from './routes/communityRoutes'
+import commentRoutes from './routes/commentRoutes'
 
 class MainApp {
   public express
@@ -15,10 +17,10 @@ class MainApp {
 
   middlewares() {
     this.express.use(function(error, req, res, next) {
-      if (error.message === 'User already exists') {
+      if (error.message.match(/\balready exists$/)) {
         res.status(409).send(error.message)
       }
-      if (error.message === 'User not found') {
+      if (error.message.match(/\bnot found$/)) {
         res.status(404).send(error.message)
       }
       res.status(500).send(error.message)
@@ -28,6 +30,8 @@ class MainApp {
   setRoutes() {
     this.express.use('/users', userRoutes)
     this.express.use('/posts', postRoutes)
+    this.express.use('/communities', communityRoutes)
+    this.express.use('/comments', commentRoutes)
   }
 }
 
