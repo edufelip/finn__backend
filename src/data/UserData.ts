@@ -9,15 +9,11 @@ class UserData implements IUserMethods {
     this.db = database
   }
 
-  getUsers() {
-    return this.db.query('SELECT * FROM users')
-  }
-
   saveUser(user: UserModel) {
     return this.db.one('INSERT INTO users(id, name) VALUES(${id} ,${name}) RETURNING *', user)
   }
 
-  getSingleUser(id: string) {
+  getUserById(id: string) {
     return this.db.oneOrNone('SELECT * FROM users WHERE id = ${id}', { id: id })
   }
 

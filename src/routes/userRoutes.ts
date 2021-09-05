@@ -3,19 +3,10 @@ import { Request, Response, Router } from 'express'
 
 const router = Router()
 
-router.get('/', async function(req: Request, res: Response, next) {
-  try {
-    const users = await userService.getUsers()
-    res.json(users)
-  } catch (e) {
-    next(e)
-  }
-})
-
 router.get('/:id', async function(req: Request, res: Response, next) {
   const id = req.params.id
   try {
-    const found_user = await userService.getSingleUser(id)
+    const found_user = await userService.getUserById(id)
     res.json(found_user)
   } catch (e) {
     next(e)
