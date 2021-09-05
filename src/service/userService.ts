@@ -9,20 +9,16 @@ class UserService implements IUserMethods {
     this.userData = userData
   }
 
-  getUsers() {
-    return this.userData.getUsers()
-  }
-
   async saveUser(user: UserModel) {
-    const found_user = await this.userData.getSingleUser(user.id)
+    const found_user = await this.userData.getUserById(user.id)
     if (found_user) {
       throw new Error('User already exists')
     }
     return this.userData.saveUser(user)
   }
 
-  async getSingleUser(id: string) {
-    const user = await this.userData.getSingleUser(id)
+  async getUserById(id: string) {
+    const user = await this.userData.getUserById(id)
     if (!user) {
       throw new Error('User not found')
     }
@@ -30,7 +26,7 @@ class UserService implements IUserMethods {
   }
 
   async updateUser(id: string, name: string) {
-    await this.getSingleUser(id)
+    await this.getUserById(id)
     return this.userData.updateUser(id, name)
   }
 

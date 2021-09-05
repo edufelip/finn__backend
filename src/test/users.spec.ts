@@ -23,12 +23,6 @@ describe.only('User Operations', () => {
     await database.query('delete from users;')
   })
 
-  it('Should get users', async () => {
-    await request(app)
-      .get('/users')
-      .expect(200)
-  })
-
   it('Should get an user', async () => {
     await request(app)
       .get(`/users/${fakeUser.id}`)
