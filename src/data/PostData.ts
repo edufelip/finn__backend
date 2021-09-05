@@ -43,16 +43,20 @@ class PostData implements IPostMethods {
     return this.db.none('DELETE FROM posts WHERE id=${id}', { id: id })
   }
 
-  increaseLikePost(user_id: string, post_id: string) {
-    return this.db.one('INSERT INTO likes(user_id, post_id) VALUES(${user_id}, ${post_id})', { user_id: user_id, post_id: post_id })
+  findLike(user_id: string, post_id: string) {
+    return this.db.oneOrNone('SELECT * FROM likes WHERE user_id=${user_id} AND post_id=${post_id}', { user_id: user_id, post_id: post_id })
   }
 
-  decreaseLikePost(user_id: string, post_id: string) {
+  giveLikeToPost(user_id: string, post_id: string) {
+    return this.db.one('INSERT INTO likes(user_id, post_id) VALUES(${user_id}, ${post_id}) RETURNING *', { user_id: user_id, post_id: post_id })
+  }
+
+  removeLikeFromPost(user_id: string, post_id: string) {
     return this.db.none('DELETE FROM likes WHERE user_id=${user_id} AND post_id=${post_id}', { user_id: user_id, post_id: post_id })
   }
 
   getLikeCount(post_id: string) {
-    return this.db.one('SELECT COUNT(*) FROM likes WHERE post_id=${post_id}', { post_id: post_id })
+    return this.db.oneOrNone('SELECT COUNT(*) FROM likes WHERE post_id=${post_id}', { post_id: post_id })
   }
 }
 

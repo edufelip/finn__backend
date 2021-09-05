@@ -5,7 +5,6 @@ const router = express.Router()
 router.get('/users/:id/feed', async function(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id
   const page = req.query && req.query.page && parseInt(req.query.page as any) > 0 ? (req.query as any).page : '1'
-  console.log(page)
   try {
     const foundPosts = await postService.getPostsFeed(id, page)
     res.status(200).json(foundPosts)
@@ -77,7 +76,7 @@ router.delete('/:id', async function(req: Request, res: Response, next: NextFunc
   }
 })
 
-router.get('/likes/:id', async function(req: Request, res: Response, next: NextFunction) {
+router.get('/:id/likes', async function(req: Request, res: Response, next: NextFunction) {
   const post_id = req.params.id
   try {
     const likes = await postService.getLikeCount(post_id)
@@ -90,17 +89,18 @@ router.get('/likes/:id', async function(req: Request, res: Response, next: NextF
 router.post('/likes', async function(req: Request, res: Response, next: NextFunction) {
   const { user_id, post_id } = req.body
   try {
-    const newLike = await postService.increaseLikePost(user_id, post_id)
+    const newLike = await postService.giveLikeToPost(user_id, post_id)
     res.status(201).json(newLike)
   } catch (e) {
     next(e)
   }
 })
 
-router.delete('/likes/:id', async function(req: Request, res: Response, next: NextFunction) {
-  const { user_id, post_id } = req.body
+router.post('/likes/:id', async function(req: Request, res: Response, next: NextFunction) {
+  const post_id = req.params.id
+  const { user_id } = req.body
   try {
-    await postService.decreaseLikePost(user_id, post_id)
+    await postService.removeLikeFromPost(user_id, post_id)
     return res.status(204).json('Successfully deleted')
   } catch (e) {
     next(e)
