@@ -35,7 +35,7 @@ class PostService implements IPostMethods {
   }
 
   async updatePost(id: string, post: PostModel) {
-    const found_post = await postData.getSinglePost(id)
+    const found_post = await this.getSinglePost(id)
     if (!found_post) throw new Error('Post not found')
     return this.postData.updatePost(id, post)
   }
@@ -48,12 +48,18 @@ class PostService implements IPostMethods {
     return this.postData.getLikeCount(post_id)
   }
 
-  async increaseLikePost(user_id: string, post_id: string) {
-    return this.postData.increaseLikePost(user_id, post_id)
+  async findLike(user_id: string, post_id: string) {
+    return this.postData.findLike(user_id, post_id)
   }
 
-  async decreaseLikePost(user_id: string, post_id: string) {
-    return this.postData.decreaseLikePost(user_id, post_id)
+  async giveLikeToPost(user_id: string, post_id: string) {
+    const foundLike = await this.findLike(user_id, post_id)
+    if (foundLike) throw new Error('Like already exists')
+    return this.postData.giveLikeToPost(user_id, post_id)
+  }
+
+  async removeLikeFromPost(user_id: string, post_id: string) {
+    return this.postData.removeLikeFromPost(user_id, post_id)
   }
 }
 
