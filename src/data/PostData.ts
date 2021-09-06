@@ -11,7 +11,7 @@ class PostData implements IPostMethods {
 
   getPostsFeed(id: string, page: string) {
     const jump = (parseInt(page) - 1) * 10
-    return this.db.query('SELECT po.id, po.content, po.image, po.user_id, po.date FROM posts po JOIN userscommunities uc ON uc.community_id = po.community_id WHERE uc.user_id = ${id} ORDER BY po.date DESC LIMIT 10 OFFSET ${jump};', { id: id, jump: jump })
+    return this.db.query('SELECT po.id, po.content, po.image, po.user_id, po.date, po.community_id FROM posts po JOIN userscommunities uc ON uc.community_id = po.community_id WHERE uc.user_id = ${id} ORDER BY po.date DESC LIMIT 10 OFFSET ${jump};', { id: id, jump: jump })
   }
 
   getPostsFromUser(id: string) {
