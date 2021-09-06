@@ -79,7 +79,8 @@ router.delete('/:id', async function(req: Request, res: Response, next: NextFunc
 router.get('/:id/likes', async function(req: Request, res: Response, next: NextFunction) {
   const post_id = req.params.id
   try {
-    const likes = await postService.getLikeCount(post_id)
+    const response = await postService.getLikeCount(post_id)
+    const likes = parseInt(response.count)
     res.json(likes)
   } catch (e) {
     next(e)
