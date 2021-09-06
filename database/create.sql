@@ -58,5 +58,5 @@ CREATE TABLE likes (
 	CONSTRAINT user_likes_post
 		FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
 	CONSTRAINT post_has_likes
-		FOREIGN KEY (community_id) REFERENCES communities (id) ON DELETE CASCADE
+		FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE
 )
