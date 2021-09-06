@@ -12,10 +12,10 @@ router.get('/users/:id', async function(req: Request, res: Response, next: NextF
   }
 })
 
-router.get('/:title', async function(req: Request, res: Response, next: NextFunction) {
-  const title = req.params.title
+router.get('/:id', async function(req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id
   try {
-    const foundCommunity = await communityService.getCommunityByTitle(title)
+    const foundCommunity = await communityService.getCommunityById(id)
     res.status(200).json(foundCommunity)
   } catch (e) {
     next(e)

@@ -51,9 +51,9 @@ describe('Community Operations', () => {
     await database.query('DELETE FROM users;')
   })
 
-  it('Should get a community (by title)', async () => {
+  it('Should get a community (by id)', async () => {
     await request(app)
-      .get(`/communities/${fakeCommunity.title}`)
+      .get(`/communities/${fakeCommunityId}`)
       .expect(200)
       .then(response => {
         expect(response.body).toMatchObject(fakeCommunity)
@@ -62,7 +62,7 @@ describe('Community Operations', () => {
 
   it('Should NOT get a community', async () => {
     await request(app)
-      .get(`/communities/${fakeCommunity.title}1`)
+      .get(`/communities/${fakeCommunityId}1`)
       .expect(404)
   })
 
@@ -245,7 +245,7 @@ describe('Community Operations', () => {
       .expect(204)
 
     await request(app)
-      .get(`/communities/${fakeCommunity.title}`)
+      .get(`/communities/${fakeCommunityId}`)
       .expect(404)
   })
 })
