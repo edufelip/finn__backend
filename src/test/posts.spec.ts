@@ -306,7 +306,7 @@ describe('Posts Operations', () => {
       .get(`/posts/${fakePostId}/likes`)
       .expect(200)
       .then(response => {
-        expect(response.body.count).toBe('1')
+        expect(response.body).toBe(1)
       })
   })
 })
