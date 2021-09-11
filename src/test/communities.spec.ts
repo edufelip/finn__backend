@@ -1,7 +1,9 @@
 import request from 'supertest'
 import app from '../index'
-import faker, { fake } from 'faker'
+import faker from 'faker'
 import database from '../infra/database'
+import fs from 'fs'
+import path from 'path'
 
 const fakeUser = {
   id: faker.datatype.uuid(),
@@ -45,6 +47,16 @@ describe('Community Operations', () => {
     await database.query('DROP TABLE communities;')
     await database.query('DROP TABLE users;')
     database.$pool.end()
+
+    fs.readdir('public', (err, files) => {
+      if (err) throw err
+
+      for (const file of files) {
+        fs.unlink(path.join('public', file), err => {
+          if (err) throw err
+        })
+      }
+    })
   })
   afterEach(async () => {
     await database.query('DELETE FROM communities;')
@@ -145,15 +157,19 @@ describe('Community Operations', () => {
     const newCommunity = {
       title: 'random title',
       description: 'random description',
-      image: 'random url',
       user_id: fakeUser.id
     }
-
     await request(app)
       .post('/communities')
-      .send(newCommunity)
+      .field('community', JSON.stringify(newCommunity))
+      .attach('community', './src/test/testUtils/test.png')
       .expect(201)
       .then(response => {
+        fs.unlink(`public/${response.body.image}`, (err) => {
+          if (err) {
+            console.log(err)
+          }
+        })
         expect(response.body).toMatchObject(newCommunity)
       })
   })
@@ -162,12 +178,12 @@ describe('Community Operations', () => {
     const newCommunity = {
       title: `${fakeCommunity.title}.`,
       description: 'random description',
-      image: 'random url',
       user_id: fakeUser.id
     }
     await request(app)
       .post('/communities')
-      .send(newCommunity)
+      .field('community', JSON.stringify(newCommunity))
+      .attach('community', './src/test/testUtils/test.png')
       .expect(500)
   })
 
@@ -175,19 +191,20 @@ describe('Community Operations', () => {
     const newCommunity = {
       title: 'random content',
       description: `${fakeCommunity.description}.`,
-      image: 'random url',
       user_id: fakeUser.id
     }
     await request(app)
       .post('/communities')
-      .send(newCommunity)
+      .field('community', JSON.stringify(newCommunity))
+      .attach('community', './src/test/testUtils/test.png')
       .expect(500)
   })
 
   it('Should NOT create a Community - EQUAL OBJECTS', async () => {
     await request(app)
       .post('/communities')
-      .send(fakeCommunity)
+      .field('community', JSON.stringify(fakeCommunity))
+      .attach('community', './src/test/testUtils/test.png')
       .expect(409)
   })
 
@@ -207,12 +224,23 @@ describe('Community Operations', () => {
       .expect(204)
   })
 
-  it('Should update a Community - Change Image', async () => {
-    const to_update = { ...fakeCommunity, image: 'changed image url' }
+  it.only('Should update a Community - Change Image', async () => {
+    const newCommunity = {
+      title: 'random title',
+      description: 'random description',
+      user_id: fakeUser.id
+    }
     await request(app)
-      .put(`/communities/${fakeCommunityId}`)
-      .send(to_update)
-      .expect(204)
+      .post('/communities')
+      .field('community', JSON.stringify(newCommunity))
+      .attach('community', './src/test/testUtils/test.png')
+      .then(async response => {
+        console.log(response.body)
+        await request(app)
+          .put(`/communities/${response.body.id}/image`)
+          .attach('community', './src/test/testUtils/test2.png')
+          .expect(204)
+      })
   })
 
   it('Should NOT update a Community - TITLE TOO LONG', async () => {
