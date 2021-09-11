@@ -16,5 +16,7 @@ export interface ICommunityMethods {
 
     updateCommunity: (title: string, community: CommunityModel) => Promise<CommunityModel>
 
+    updateCommunityImage: (id: string, image: string) => Promise<CommunityModel>
+
     deleteCommunity: (id: string) => Promise<CommunityModel>
 }
