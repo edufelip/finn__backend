@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express'
 import communityService from '@service/communityService'
 import multer from 'multer'
-import storage from '../config/multer'
+import { upload } from '../config/multer'
 import fs from 'fs'
 import { CommunityModel } from '@models/CommunityModel'
 
@@ -50,23 +50,23 @@ router.post('/unsubscribe', async function(req: Request, res: Response, next: Ne
 })
 
 router.post('/', async function(req: Request, res: Response, next: NextFunction) {
-  const upload = multer({ storage: storage }).single('community')
-  upload(req, res, async (err) => {
+  upload.single('community')(req, res, async (err) => {
     if (err) {
-      console.log(err)
-    }
-    const parse = JSON.parse(req.body.community)
-    const community = { ...parse, image: req.file.filename }
-    try {
-      const new_community = await communityService.saveCommunity(community)
-      res.status(201).json(new_community)
-    } catch (e) {
-      fs.unlink(`public/${req.file.filename}`, (err) => {
-        if (err) {
-          console.log(err)
-        }
-      })
-      next(e)
+      res.status(500).send(err.message)
+    } else {
+      const parse = JSON.parse(req.body.community)
+      const community = { ...parse, image: req.file.filename }
+      try {
+        const new_community = await communityService.saveCommunity(community)
+        res.status(201).json(new_community)
+      } catch (e) {
+        fs.unlink(`public/${req.file.filename}`, (err) => {
+          if (err) {
+            console.log(err)
+          }
+        })
+        next(e)
+      }
     }
   })
 })
@@ -84,27 +84,27 @@ router.put('/:id', async function(req: Request, res: Response, next: NextFunctio
 
 router.put('/:id/image', async function(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id
-  const upload = multer({ storage: storage }).single('community')
-  upload(req, res, async (err) => {
+  upload.single('community')(req, res, async (err) => {
     if (err) {
-      console.log(err)
-    }
-    try {
-      const foundCommunity: CommunityModel = await communityService.getCommunityById(id)
-      await communityService.updateCommunityImage(foundCommunity.id, req.file.filename)
-      fs.unlink(`public/${foundCommunity.image}`, (err) => {
-        if (err) {
-          console.log(err)
-        }
-      })
-      res.status(204).end()
-    } catch (e) {
-      fs.unlink(`public/${req.file.filename}`, (err) => {
-        if (err) {
-          console.log(err)
-        }
-      })
-      next(e)
+      res.status(500).send(err.message)
+    } else {
+      try {
+        const foundCommunity: CommunityModel = await communityService.getCommunityById(id)
+        await communityService.updateCommunityImage(foundCommunity.id, req.file.filename)
+        fs.unlink(`public/${foundCommunity.image}`, (err) => {
+          if (err) {
+            console.log(err)
+          }
+        })
+        res.status(204).end()
+      } catch (e) {
+        fs.unlink(`public/${req.file.filename}`, (err) => {
+          if (err) {
+            console.log(err)
+          }
+        })
+        next(e)
+      }
     }
   })
 })

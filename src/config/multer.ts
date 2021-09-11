@@ -14,4 +14,18 @@ const storage = multer.diskStorage({
   }
 })
 
-export default storage
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    const ext = path.extname(file.originalname)
+    if (ext !== '.png') {
+      return cb(new Error('File must be .png'))
+    }
+    return cb(null, true)
+  },
+  limits: {
+    fileSize: 1024 * 300
+  }
+})
+
+export { upload }
