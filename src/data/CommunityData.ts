@@ -35,7 +35,11 @@ class CommunityData implements ICommunityMethods {
   }
 
   updateCommunity(id: string, community: CommunityModel) {
-    return this.db.none('UPDATE communities SET title=${title}, description=${description}, image=${image} WHERE id = ${id}', { ...community, id: id })
+    return this.db.none('UPDATE communities SET title=${title}, description=${description} WHERE id = ${id}', { ...community, id: id })
+  }
+
+  updateCommunityImage(id: string, image: string) {
+    return this.db.none('UPDATE communities SET image=${image} WHERE id = ${id}', { image: image, id: id })
   }
 
   deleteCommunity(id: string) {

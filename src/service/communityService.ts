@@ -50,6 +50,10 @@ class CommunityService implements ICommunityMethods {
     return this.communityData.updateCommunity(id, community)
   }
 
+  async updateCommunityImage(id: string, image: string) {
+    return this.communityData.updateCommunityImage(id, image)
+  }
+
   async deleteCommunity(id: string) {
     return this.communityData.deleteCommunity(id)
   }
