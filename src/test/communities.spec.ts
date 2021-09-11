@@ -25,7 +25,7 @@ randomDesc += faker.lorem.word(4)
 const fakeCommunity = {
   title: randomTitle,
   description: randomDesc,
-  image: faker.image.imageUrl(),
+  image: '',
   user_id: fakeUser.id
 }
 
@@ -208,6 +208,28 @@ describe('Community Operations', () => {
       .expect(409)
   })
 
+  it('Should NOT create a Community - WRONG IMAGE EXT', async () => {
+    await request(app)
+      .post('/communities')
+      .field('community', JSON.stringify(fakeCommunity))
+      .attach('community', './src/test/testUtils/test.jpg')
+      .expect(500)
+      .then(response => {
+        expect(response.text).toBe('File must be .png')
+      })
+  })
+
+  it('Should NOT create a Community - IMAGE ABOVE 300KB', async () => {
+    await request(app)
+      .post('/communities')
+      .field('community', JSON.stringify(fakeCommunity))
+      .attach('community', './src/test/testUtils/testLarge.png')
+      .expect(500)
+      .then(response => {
+        expect(response.text).toBe('File too large')
+      })
+  })
+
   it('Should update a Community - Change Title', async () => {
     const to_update = { ...fakeCommunity, title: 'changed title' }
     await request(app)
@@ -224,7 +246,7 @@ describe('Community Operations', () => {
       .expect(204)
   })
 
-  it.only('Should update a Community - Change Image', async () => {
+  it('Should update a Community - Change Image', async () => {
     const newCommunity = {
       title: 'random title',
       description: 'random description',
@@ -235,7 +257,6 @@ describe('Community Operations', () => {
       .field('community', JSON.stringify(newCommunity))
       .attach('community', './src/test/testUtils/test.png')
       .then(async response => {
-        console.log(response.body)
         await request(app)
           .put(`/communities/${response.body.id}/image`)
           .attach('community', './src/test/testUtils/test2.png')
@@ -265,6 +286,48 @@ describe('Community Operations', () => {
       .put(`/communities/${fakeCommunityId}1`)
       .send(to_update)
       .expect(404)
+  })
+
+  it('Should NOT update a Community - WRONG IMAGE EXT', async () => {
+    const newCommunity = {
+      title: 'random title',
+      description: 'random description',
+      user_id: fakeUser.id
+    }
+    await request(app)
+      .post('/communities')
+      .field('community', JSON.stringify(newCommunity))
+      .attach('community', './src/test/testUtils/test.png')
+      .then(async response => {
+        await request(app)
+          .put(`/communities/${response.body.id}/image`)
+          .attach('community', './src/test/testUtils/test.jpg')
+          .expect(500)
+          .then(response => {
+            expect(response.text).toBe('File must be .png')
+          })
+      })
+  })
+
+  it('Should NOT update a Community - IMAGE TOO LARGE', async () => {
+    const newCommunity = {
+      title: 'random title',
+      description: 'random description',
+      user_id: fakeUser.id
+    }
+    await request(app)
+      .post('/communities')
+      .field('community', JSON.stringify(newCommunity))
+      .attach('community', './src/test/testUtils/test.png')
+      .then(async response => {
+        await request(app)
+          .put(`/communities/${response.body.id}/image`)
+          .attach('community', './src/test/testUtils/testLarge.png')
+          .expect(500)
+          .then(response => {
+            expect(response.text).toBe('File too large')
+          })
+      })
   })
 
   it('Should delete a Community', async () => {
