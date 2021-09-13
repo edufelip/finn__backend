@@ -14,14 +14,16 @@ class PostData implements IPostMethods {
     return this.db.query('SELECT po.id, po.content, po.image, po.user_id, po.date, po.community_id FROM posts po JOIN userscommunities uc ON uc.community_id = po.community_id WHERE uc.user_id = ${id} ORDER BY po.date DESC LIMIT 10 OFFSET ${jump};', { id: id, jump: jump })
   }
 
-  getPostsFromUser(id: string) {
-    return this.db.query('SELECT * FROM posts WHERE user_id=${user_id}',
-      { user_id: id })
+  getPostsFromUser(id: string, page: string) {
+    const jump = (parseInt(page) - 1) * 10
+    return this.db.query('SELECT * FROM posts WHERE user_id=${user_id} ORDER BY posts.date DESC LIMIT 10 OFFSET ${jump}',
+      { user_id: id, jump: jump })
   }
 
-  getPostsFromCommunity(id: string) {
-    return this.db.query('SELECT * FROM posts WHERE community_id=${community_id}',
-      { community_id: id })
+  getPostsFromCommunity(id: string, page: string) {
+    const jump = (parseInt(page) - 1) * 10
+    return this.db.query('SELECT * FROM posts WHERE community_id=${community_id} ORDER BY posts.date DESC LIMIT 10 OFFSET ${jump}',
+      { community_id: id, jump: jump })
   }
 
   getSinglePost(id: string) {

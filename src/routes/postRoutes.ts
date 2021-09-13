@@ -15,9 +15,9 @@ router.get('/users/:id/feed', async function(req: Request, res: Response, next: 
 
 router.get('/users/:id', async function(req: Request, res: Response, next: NextFunction) {
   const user_id = req.params.id
-  // checar usuario na table usercommunities
+  const page = req.query && req.query.page && parseInt(req.query.page as any) > 0 ? (req.query as any).page : '1'
   try {
-    const found_posts = await postService.getPostsFromUser(user_id)
+    const found_posts = await postService.getPostsFromUser(user_id, page)
     res.status(200).json(found_posts)
   } catch (e) {
     next(e)
@@ -26,9 +26,9 @@ router.get('/users/:id', async function(req: Request, res: Response, next: NextF
 
 router.get('/communities/:id', async function(req: Request, res: Response, next: NextFunction) {
   const community_id = req.params.id
-  // checar community na table usercommunities
+  const page = req.query && req.query.page && parseInt(req.query.page as any) > 0 ? (req.query as any).page : '1'
   try {
-    const found_posts = await postService.getPostsFromCommunity(community_id)
+    const found_posts = await postService.getPostsFromCommunity(community_id, page)
     res.status(200).json(found_posts)
   } catch (e) {
     next(e)

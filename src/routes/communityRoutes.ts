@@ -27,6 +27,17 @@ router.get('/:id', async function(req: Request, res: Response, next: NextFunctio
   }
 })
 
+router.get('/:id/subscribers', async function(req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id
+  try {
+    const response = await communityService.getCommunitySubscribersCount(id)
+    const likes = parseInt(response.count)
+    res.json(likes)
+  } catch (e) {
+    next(e)
+  }
+})
+
 router.post('/subscribe', async function(req: Request, res: Response, next: NextFunction) {
   const user_id = req.body.user_id
   const comm_title = req.body.community_title

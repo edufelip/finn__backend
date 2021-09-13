@@ -29,6 +29,10 @@ class CommunityData implements ICommunityMethods {
     return this.db.none('DELETE FROM userscommunities WHERE user_id=${user_id} AND community_id=${community_id}', { user_id: user_id, community_id: comm_id })
   }
 
+  getCommunitySubscribersCount(comm_id: string) {
+    return this.db.oneOrNone('SELECT COUNT(*) FROM userscommunities WHERE community_id=${id}', { id: comm_id })
+  }
+
   saveCommunity(community: CommunityModel) {
     return this.db.one('INSERT INTO communities(title, description, image, user_id) VALUES(${title}, ${description}, ${image}, ${user_id}) RETURNING *',
       community)

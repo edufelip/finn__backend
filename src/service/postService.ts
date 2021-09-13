@@ -14,13 +14,13 @@ class PostService implements IPostMethods {
     return posts
   }
 
-  async getPostsFromUser(id: string) {
-    const posts = await postData.getPostsFromUser(id)
+  async getPostsFromUser(id: string, page: string) {
+    const posts = await postData.getPostsFromUser(id, page)
     return posts
   }
 
-  async getPostsFromCommunity(id: string) {
-    const posts = await postData.getPostsFromCommunity(id)
+  async getPostsFromCommunity(id: string, page: string) {
+    const posts = await postData.getPostsFromCommunity(id, page)
     return posts
   }
 
