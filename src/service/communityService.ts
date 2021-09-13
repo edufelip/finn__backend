@@ -26,16 +26,22 @@ class CommunityService implements ICommunityMethods {
     return communities
   }
 
-  async subscribeUserCommunity(userId: string, commTitle: string) {
-    const existing_community = await communityData.getCommunityByTitle(commTitle)
+  async subscribeUserCommunity(user_id: string, comm_title: string) {
+    const existing_community = await communityData.getCommunityByTitle(comm_title)
     if (!existing_community) throw new Error('Community not found')
-    return this.communityData.subscribeUserCommunity(userId, existing_community.id)
+    return this.communityData.subscribeUserCommunity(user_id, existing_community.id)
   }
 
-  async unsubscribeUserCommunity(userId: string, commTitle: string) {
-    const existing_community = await communityData.getCommunityByTitle(commTitle)
+  async unsubscribeUserCommunity(user_id: string, comm_title: string) {
+    const existing_community = await communityData.getCommunityByTitle(comm_title)
     if (!existing_community) throw new Error('Community not found')
-    return this.communityData.unsubscribeUserCommunity(userId, existing_community.id)
+    return this.communityData.unsubscribeUserCommunity(user_id, existing_community.id)
+  }
+
+  async getCommunitySubscribersCount(comm_id: string) {
+    const existing_community = await communityData.getCommunityById(comm_id)
+    if (!existing_community) throw new Error('Community not found')
+    return this.communityData.getCommunitySubscribersCount(comm_id)
   }
 
   async saveCommunity(community: CommunityModel) {

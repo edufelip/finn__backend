@@ -37,7 +37,7 @@
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
     "test": "jest --runInBand",
-    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored"
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

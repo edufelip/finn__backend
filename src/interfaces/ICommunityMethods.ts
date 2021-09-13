@@ -1,6 +1,10 @@
 import { CommentModel } from '@models/CommentModel'
 import { CommunityModel } from '@models/CommunityModel'
 
+export interface SubscribersResponse {
+    count: string
+}
+
 export interface ICommunityMethods {
     getCommunitiesUser: (id: string) => Promise<CommentModel[]>
 
@@ -11,6 +15,8 @@ export interface ICommunityMethods {
     subscribeUserCommunity: (userId: string, commTitle: string) => Promise<CommunityModel>
 
     unsubscribeUserCommunity: (userId: string, commTitle: string) => Promise<CommunityModel>
+
+    getCommunitySubscribersCount: (comm_id: string) => Promise<SubscribersResponse>
 
     saveCommunity: (post: CommunityModel) => Promise<CommunityModel>
 

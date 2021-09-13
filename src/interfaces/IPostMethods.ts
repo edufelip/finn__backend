@@ -1,16 +1,16 @@
 import { PostModel } from '@models/PostModel'
 import { LikeModel } from '@models/LikeModel'
 
-export interface likeResponse {
+export interface LikeResponse {
     count: string
 }
 
 export interface IPostMethods {
     getPostsFeed: (id: string, page: string) => Promise<PostModel[]>
 
-    getPostsFromUser: (id: string) => Promise<PostModel[]>
+    getPostsFromUser: (id: string, page: string) => Promise<PostModel[]>
 
-    getPostsFromCommunity: (id: string) => Promise<PostModel[]>
+    getPostsFromCommunity: (id: string, page: string) => Promise<PostModel[]>
 
     getSinglePost: (id: string) => Promise<PostModel>
 
@@ -26,5 +26,5 @@ export interface IPostMethods {
 
     removeLikeFromPost: (user_id: string, post_id: string) => Promise<LikeModel>
 
-    getLikeCount: (post_id: string) => Promise<likeResponse>
+    getLikeCount: (post_id: string) => Promise<LikeResponse>
 }

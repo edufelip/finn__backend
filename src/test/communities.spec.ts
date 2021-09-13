@@ -153,6 +153,21 @@ describe('Community Operations', () => {
       })
   })
 
+  it('Should get the number of Subscribers of a Community', async() => {
+    await request(app)
+      .get(`/communities/${fakeCommunityId}/subscribers`)
+      .expect(200)
+      .then(response => {
+        expect(response.body).toBe(0)
+      })
+  })
+
+  it.only('Should NOT get the number of Subscribers of a Community', async() => {
+    await request(app)
+      .get(`/communities/${fakeCommunityId}1/subscribers`)
+      .expect(404)
+  })
+
   it('Should create a Community', async () => {
     const newCommunity = {
       title: 'random title',
