@@ -1,7 +1,8 @@
 import request from 'supertest'
 import app from '../index'
-import faker, { fake } from 'faker'
+import faker from 'faker'
 import database from '../infra/database'
+import fs from 'fs'
 
 const fakeUser = {
   id: faker.datatype.uuid(),
@@ -192,17 +193,24 @@ describe('Posts Operations', () => {
       .expect(404)
   })
 
-  it('Should save a Post', async () => {
+  it('Should create a Post', async () => {
     const newPost = {
       content: 'new content',
-      image: 'new image'
+      user_id: fakeUser.id,
+      community_id: fakeCommunityId
     }
 
     await request(app)
       .post('/posts')
-      .send({ ...newPost, user_id: fakeUser.id, community_id: fakeCommunityId })
+      .field('post', JSON.stringify(newPost))
+      .attach('post', './src/test/testUtils/test.png')
       .expect(201)
       .then(response => {
+        fs.unlink(`public/${response.body.image}`, (err) => {
+          if (err) {
+            console.log(err)
+          }
+        })
         expect(response.body).toMatchObject(newPost)
       })
   })
