@@ -1,5 +1,7 @@
 import postService from '@service/postService'
 import express, { NextFunction, Request, Response } from 'express'
+import { upload } from '../config/multer'
+import fs from 'fs'
 const router = express.Router()
 
 router.get('/users/:id/feed', async function(req: Request, res: Response, next: NextFunction) {
@@ -46,13 +48,27 @@ router.get('/:id', async function(req: Request, res: Response, next: NextFunctio
 })
 
 router.post('/', async function(req: Request, res: Response, next: NextFunction) {
-  const post = req.body
-  try {
-    const new_post = await postService.savePost(post)
-    res.status(201).json(new_post)
-  } catch (e) {
-    next(e)
-  }
+  upload.single('post')(req, res, async (err) => {
+    if (err) {
+      res.status(500).send(err.message)
+    } else {
+      const parse = JSON.parse(req.body.post)
+      console.log(parse)
+      const post = { ...parse, image: req.file.filename }
+      console.log(post)
+      try {
+        const new_post = await postService.savePost(post)
+        res.status(201).json(new_post)
+      } catch (e) {
+        fs.unlink(`public/${req.file.filename}`, (err) => {
+          if (err) {
+            console.log(err)
+          }
+        })
+        next(e)
+      }
+    }
+  })
 })
 
 router.put('/:id', async function(req: Request, res: Response, next: NextFunction) {

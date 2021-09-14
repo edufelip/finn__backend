@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express'
 import communityService from '@service/communityService'
-import multer from 'multer'
 import { upload } from '../config/multer'
 import fs from 'fs'
 import { CommunityModel } from '@models/CommunityModel'
