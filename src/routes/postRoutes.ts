@@ -1,5 +1,5 @@
 import postService from '@service/postService'
-import express, { NextFunction, Request, Response } from 'express'
+import express, { NextFunction, request, Request, Response } from 'express'
 import { upload } from '../config/multer'
 import fs from 'fs'
 const router = express.Router()
@@ -53,9 +53,7 @@ router.post('/', async function(req: Request, res: Response, next: NextFunction)
       res.status(500).send(err.message)
     } else {
       const parse = JSON.parse(req.body.post)
-      console.log(parse)
-      const post = { ...parse, image: req.file.filename }
-      console.log(post)
+      const post = { ...parse, image: req.file ? req.file.filename : null }
       try {
         const new_post = await postService.savePost(post)
         res.status(201).json(new_post)
