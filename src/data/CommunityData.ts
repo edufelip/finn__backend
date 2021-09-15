@@ -9,6 +9,10 @@ class CommunityData implements ICommunityMethods {
     this.db = database
   }
 
+  getCommunities(query: string) {
+    return this.db.query('SELECT COUNT(*) totalcount, a.id, a.title, a.description, a.date FROM communities a JOIN userscommunities b ON a.id = b.community_id WHERE a.title ILIKE ${query} GROUP BY a.id ORDER BY totalcount;', { query: `%${query}%` })
+  }
+
   getCommunityByTitle(title: string) {
     return this.db.oneOrNone('SELECT * FROM communities WHERE title = ${title}', { title: title })
   }

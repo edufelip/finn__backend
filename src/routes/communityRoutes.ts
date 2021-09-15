@@ -6,6 +6,16 @@ import { CommunityModel } from '@models/CommunityModel'
 
 const router = express.Router()
 
+router.get('/', async function(req: Request, res: Response, next: NextFunction) {
+  const query = req.query && req.query.search ? (req.query as any).search : ''
+  try {
+    const foundCommunities = await communityService.getCommunities(query)
+    res.status(200).json(foundCommunities)
+  } catch (e) {
+    next(e)
+  }
+})
+
 router.get('/users/:id', async function(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id
   try {

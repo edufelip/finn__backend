@@ -9,6 +9,11 @@ class CommunityService implements ICommunityMethods {
     this.communityData = communityData
   }
 
+  async getCommunities(query: string) {
+    const communities = await communityData.getCommunities(query)
+    return communities
+  }
+
   async getCommunityByTitle(title: string) {
     const community = await communityData.getCommunityByTitle(title)
     if (!community) throw new Error('Community not found')
