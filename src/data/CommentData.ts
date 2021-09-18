@@ -10,11 +10,11 @@ class CommentData implements ICommentMethods {
     }
 
     getCommentsUser(id: string) {
-      return this.db.query('SELECT * FROM comments WHERE user_id = ${id}', { id: id })
+      return this.db.query('SELECT * FROM comments WHERE user_id = ${id} ORDER BY date DESC LIMIT 20', { id: id })
     }
 
     getCommentsPost(id: string) {
-      return this.db.query('SELECT * FROM comments WHERE post_id = ${id}', { id: id })
+      return this.db.query('SELECT * FROM comments WHERE post_id = ${id} ORDER BY date DESC LIMIT 20', { id: id })
     }
 
     getSingleComment(id: string) {
