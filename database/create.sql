@@ -1,6 +1,7 @@
 CREATE TABLE users (
     id text PRIMARY KEY,
     name text NOT NULL,
+	photo text,
     DATE TIMESTAMP DEFAULT now()
 );
 

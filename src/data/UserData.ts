@@ -10,7 +10,7 @@ class UserData implements IUserMethods {
   }
 
   saveUser(user: UserModel) {
-    return this.db.one('INSERT INTO users(id, name) VALUES(${id} ,${name}) RETURNING *', user)
+    return this.db.one('INSERT INTO users(id, name, photo) VALUES(${id} ,${name}, ${photo}) RETURNING *', user)
   }
 
   getUserById(id: string) {
