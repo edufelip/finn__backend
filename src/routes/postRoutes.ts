@@ -26,6 +26,18 @@ router.get('/users/:id', async function(req: Request, res: Response, next: NextF
   }
 })
 
+router.get('/:postId/users/:userId', async function(req: Request, res: Response, next: NextFunction) {
+  const post_id = req.params.postId
+  const user_id = req.params.userId
+  try {
+    const found_like = await postService.findLike(user_id, post_id)
+    const resp = found_like ? 1 : 0
+    res.status(200).json(resp)
+  } catch (e) {
+    next(e)
+  }
+})
+
 router.get('/communities/:id', async function(req: Request, res: Response, next: NextFunction) {
   const community_id = req.params.id
   const page = req.query && req.query.page && parseInt(req.query.page as any) > 0 ? (req.query as any).page : '1'
@@ -113,7 +125,7 @@ router.post('/likes', async function(req: Request, res: Response, next: NextFunc
 
 router.post('/likes/:id', async function(req: Request, res: Response, next: NextFunction) {
   const post_id = req.params.id
-  const { user_id } = req.body
+  const user_id = req.body.id
   try {
     await postService.removeLikeFromPost(user_id, post_id)
     return res.status(204).json('Successfully deleted')

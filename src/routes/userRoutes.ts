@@ -1,3 +1,4 @@
+import { UserModel } from '@models/UserModel'
 import userService from '@service/userService'
 import { Request, Response, Router } from 'express'
 

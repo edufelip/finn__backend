@@ -295,7 +295,7 @@ describe('Posts Operations', () => {
 
     await request(app)
       .delete(`/posts/${fakePostId}`)
-      .send({ user_id: fakeUser.id })
+      .send({ id: fakeUser.id })
       .expect(204)
   })
 
