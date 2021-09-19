@@ -30,7 +30,7 @@ class UserService implements IUserMethods {
     return this.userData.updateUser(id, name)
   }
 
-  deleteUser(id: string) {
+  async deleteUser(id: string) {
     return this.userData.deleteUser(id)
   }
 }
