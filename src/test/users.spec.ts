@@ -5,12 +5,13 @@ import database from '../infra/database'
 
 const fakeUser = {
   id: faker.datatype.uuid(),
-  name: `${faker.name.firstName()} ${faker.name.lastName()}`
+  name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+  photo: ''
 }
 
-describe.only('User Operations', () => {
+describe('User Operations', () => {
   beforeAll(async () => {
-    await database.query('create table users (id text primary key,name text not null,date timestamp default now());')
+    await database.query('create table users (id text primary key,name text not null, photo text, date timestamp default now());')
   })
   beforeEach(async () => {
     await database.query('INSERT INTO users(id, name) VALUES(${id}, ${name})', fakeUser)
@@ -42,7 +43,8 @@ describe.only('User Operations', () => {
   it('should create an user', async () => {
     const newUser = {
       id: faker.datatype.uuid(),
-      name: faker.internet.userName()
+      name: faker.internet.userName(),
+      photo: ''
     }
     await request(app)
       .post('/users')
@@ -65,7 +67,8 @@ describe.only('User Operations', () => {
     // update it
     const newUser = {
       id: fakeUser.id,
-      name: 'Random Name'
+      name: 'Random Name',
+      photo: ''
     }
     await request(app)
       .put(`/users/${fakeUser.id}`)
@@ -85,7 +88,8 @@ describe.only('User Operations', () => {
   it('should NOT update an user', async () => {
     const newUser = {
       id: faker.datatype.uuid(),
-      name: 'Random Name'
+      name: 'Random Name',
+      photo: ''
     }
     await request(app)
       .put(`/users/${newUser.id}`)

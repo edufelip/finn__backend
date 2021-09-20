@@ -108,7 +108,7 @@ describe('Community Operations', () => {
 
     await request(app)
       .post('/communities/subscribe')
-      .send({ user_id: fakeUser.id, community_title: fakeCommunity.title })
+      .send({ user_id: fakeUser.id, community_id: fakeCommunityId })
       .expect(201)
       .then(response => {
         expect(response.body).toMatchObject({ user_id: fakeUser.id, community_id: comm.id })
@@ -120,7 +120,7 @@ describe('Community Operations', () => {
 
     await request(app)
       .post('/communities/subscribe')
-      .send({ user_id: fakeUser.id, community_title: 'random title' })
+      .send({ user_id: fakeUser.id, community_id: 'random id' })
       .expect(404)
   })
 
@@ -132,11 +132,11 @@ describe('Community Operations', () => {
 
     await request(app)
       .post('/communities/subscribe')
-      .send({ user_id: fakeUser.id, community_title: fakeCommunity.title })
+      .send({ user_id: fakeUser.id, community_id: fakeCommunityId })
 
     await request(app)
       .post('/communities/unsubscribe')
-      .send({ user_id: fakeUser.id, community_title: fakeCommunity.title })
+      .send({ user_id: fakeUser.id, community_id: fakeCommunityId })
       .expect(204)
 
     await request(app)
