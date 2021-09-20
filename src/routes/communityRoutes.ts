@@ -49,9 +49,9 @@ router.get('/:id/subscribers', async function(req: Request, res: Response, next:
 
 router.post('/subscribe', async function(req: Request, res: Response, next: NextFunction) {
   const user_id = req.body.user_id
-  const comm_title = req.body.community_title
+  const comm_id = req.body.community_id
   try {
-    const new_subscription = await communityService.subscribeUserCommunity(user_id, comm_title)
+    const new_subscription = await communityService.subscribeUserCommunity(user_id, comm_id)
     res.status(201).json(new_subscription)
   } catch (e) {
     next(e)
@@ -60,10 +60,21 @@ router.post('/subscribe', async function(req: Request, res: Response, next: Next
 
 router.post('/unsubscribe', async function(req: Request, res: Response, next: NextFunction) {
   const user_id = req.body.user_id
-  const comm_title = req.body.community_title
+  const comm_id = req.body.community_id
   try {
-    await communityService.unsubscribeUserCommunity(user_id, comm_title)
+    await communityService.unsubscribeUserCommunity(user_id, comm_id)
     res.status(204).json('Successfully deleted')
+  } catch (e) {
+    next(e)
+  }
+})
+
+router.get('/:community_id/users/:user_id', async function(req: Request, res: Response, next: NextFunction) {
+  const community_id = req.params.community_id
+  const user_id = req.params.user_id
+  try {
+    const sub = await communityService.getSubscription(user_id, community_id)
+    res.status(200).json(sub)
   } catch (e) {
     next(e)
   }
@@ -78,6 +89,7 @@ router.post('/', async function(req: Request, res: Response, next: NextFunction)
       const community = { ...parse, image: req.file.filename }
       try {
         const new_community = await communityService.saveCommunity(community)
+        await communityService.subscribeUserCommunity(parse.user_id, new_community.id)
         res.status(201).json(new_community)
       } catch (e) {
         fs.unlink(`public/${req.file.filename}`, (err) => {
