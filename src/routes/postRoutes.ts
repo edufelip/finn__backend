@@ -65,7 +65,8 @@ router.post('/', async function(req: Request, res: Response, next: NextFunction)
       res.status(500).send(err.message)
     } else {
       const parse = JSON.parse(req.body.post)
-      const post = { ...parse, image: req.file ? req.file.filename : null }
+      console.log(parse)
+      const post = { ...parse, image: req.file !== undefined ? req.file.filename : null }
       try {
         const new_post = await postService.savePost(post)
         res.status(201).json(new_post)
