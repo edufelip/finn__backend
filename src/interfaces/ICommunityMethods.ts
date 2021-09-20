@@ -5,6 +5,12 @@ export interface SubscribersResponse {
     count: string
 }
 
+export interface Subscription {
+    id: string,
+    user_id: string,
+    community_id: string
+}
+
 export interface ICommunityMethods {
     getCommunitiesUser: (id: string) => Promise<CommentModel[]>
 
@@ -15,6 +21,8 @@ export interface ICommunityMethods {
     subscribeUserCommunity: (userId: string, commTitle: string) => Promise<CommunityModel>
 
     unsubscribeUserCommunity: (userId: string, commTitle: string) => Promise<CommunityModel>
+
+    getSubscription: (userId: string, commId: string) => Promise<Subscription>
 
     getCommunitySubscribersCount: (comm_id: string) => Promise<SubscribersResponse>
 

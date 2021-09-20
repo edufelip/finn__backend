@@ -10,7 +10,7 @@ class CommunityData implements ICommunityMethods {
   }
 
   getCommunities(query: string) {
-    return this.db.query('SELECT COUNT(*) totalcount, a.id, a.title, a.description, a.date, a.image FROM communities a JOIN userscommunities b ON a.id = b.community_id WHERE a.title ILIKE ${query} GROUP BY a.id ORDER BY totalcount LIMIT 10;', { query: `%${query}%` })
+    return this.db.query('SELECT COUNT(b.community_id) totalcount, a.id, a.title, a.description, a.date, a.image FROM communities a FULL JOIN userscommunities b ON a.id = b.community_id WHERE a.title ILIKE ${query} GROUP BY a.id ORDER BY totalcount DESC LIMIT 10;', { query: `%${query}%` })
   }
 
   getCommunityByTitle(title: string) {
@@ -22,7 +22,7 @@ class CommunityData implements ICommunityMethods {
   }
 
   getCommunitiesUser(id: string) {
-    return this.db.query('SELECT * FROM communities co JOIN userscommunities uc ON uc.user_id = ${id} AND co.id = uc.community_id', { id: id })
+    return this.db.query('SELECT co.* FROM communities co JOIN userscommunities uc ON uc.user_id = ${id} AND co.id = uc.community_id', { id: id })
   }
 
   subscribeUserCommunity(user_id: string, comm_id: string) {
@@ -31,6 +31,10 @@ class CommunityData implements ICommunityMethods {
 
   unsubscribeUserCommunity(user_id: string, comm_id: string) {
     return this.db.none('DELETE FROM userscommunities WHERE user_id=${user_id} AND community_id=${community_id}', { user_id: user_id, community_id: comm_id })
+  }
+
+  getSubscription(user_id: string, comm_id: string) {
+    return this.db.oneOrNone('SELECT * FROM userscommunities WHERE user_id=${user_id} AND community_id=${comm_id}', { user_id: user_id, comm_id: comm_id })
   }
 
   getCommunitySubscribersCount(comm_id: string) {
