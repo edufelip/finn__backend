@@ -24,7 +24,7 @@ For the API to work properly the following values are required:
 | Variable Name                     | Description                    |
 |-----------------------------------|--------------------------------|
 | DB_NAME                   | Name of the PostgreSQL database the api is going to use |
-| DEVDB_NAME                  | Name of the PostgreSQL database the api is goning to use to run the tests |
+| DEVDB_NAME                  | Name of the PostgreSQL database the api is going to use to run the tests |
 | DB_HOST                | Database of the address (Use localhost if you're running the db in your machine) |
 | DB_PORT              | The port your db is using. Since this api requires a postgreSQL db the value is supposed to be 5432 |
 | DB_USER                | User of your postgreSQL database |
