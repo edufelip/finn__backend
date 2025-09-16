@@ -1,0 +1,67 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: finn-backend
+  flyway:
+    enabled: true
+app:
+  upload:
+    dir: ../public
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST:${SPRING_DB_HOST:localhost}}:${DB_PORT:${SPRING_DB_PORT:5432}}/${DB_NAME:${SPRING_DB_NAME:finn}}
+    username: ${DB_USER:${SPRING_DB_USER:postgres}}
+    password: ${DB_PASSWORD:${SPRING_DB_PASSWORD:postgres}}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+security:
+  requireAppHeader: true
+  disableAuth: false
+  requireAppCheck: true
+  app:
+    allowedPackage: com.edufelip.finn
+    allowedUserAgentContains: okhttp
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:${SPRING_DB_HOST:localhost}}:${DB_PORT:${SPRING_DB_PORT:5432}}/${DEVDB_NAME:${SPRING_DB_NAME:finn_test}}
+  flyway:
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+app:
+  upload:
+    dir: ../public
+
+security:
+  requireAppHeader: false
+  disableAuth: true
+  requireAppCheck: false
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
