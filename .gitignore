@@ -2,3 +2,25 @@ node_modules
 dist
 .env
 public
+
+# OS
+.DS_Store
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Gradle / Build
+.gradle/
+**/build/
+springboot/.gradle/
+springboot/build/
+
+# Environment files
+springboot/.env
+*.env
+
+# Logs
+*.log
+logs/
