@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="utf-8"?>
+<baseline version="1.0">
+    <file name="build.gradle.kts">
+        <error line="8" column="1" source="standard:indent" />
+    </file>
+    <file name="src/main/kotlin/com/finn/FinnApplication.kt">
+        <error line="13" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/controller/CommentController.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="7" column="1" source="standard:no-wildcard-imports" />
+        <error line="13" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="15" column="16" source="standard:parameter-list-wrapping" />
+        <error line="15" column="16" source="standard:function-signature" />
+        <error line="15" column="38" source="standard:parameter-list-wrapping" />
+        <error line="15" column="38" source="standard:function-signature" />
+        <error line="15" column="75" source="standard:function-signature" />
+        <error line="19" column="16" source="standard:parameter-list-wrapping" />
+        <error line="19" column="16" source="standard:function-signature" />
+        <error line="19" column="40" source="standard:parameter-list-wrapping" />
+        <error line="19" column="40" source="standard:function-signature" />
+        <error line="19" column="77" source="standard:function-signature" />
+        <error line="23" column="13" source="standard:parameter-list-wrapping" />
+        <error line="23" column="13" source="standard:function-signature" />
+        <error line="23" column="35" source="standard:parameter-list-wrapping" />
+        <error line="23" column="35" source="standard:function-signature" />
+        <error line="26" column="16" source="standard:parameter-list-wrapping" />
+        <error line="26" column="16" source="standard:function-signature" />
+        <error line="26" column="51" source="standard:parameter-list-wrapping" />
+        <error line="26" column="51" source="standard:function-signature" />
+        <error line="26" column="82" source="standard:function-signature" />
+        <error line="30" column="16" source="standard:parameter-list-wrapping" />
+        <error line="30" column="16" source="standard:function-signature" />
+        <error line="30" column="40" source="standard:parameter-list-wrapping" />
+        <error line="30" column="40" source="standard:function-signature" />
+        <error line="30" column="75" source="standard:parameter-list-wrapping" />
+        <error line="30" column="75" source="standard:function-signature" />
+        <error line="36" column="16" source="standard:parameter-list-wrapping" />
+        <error line="36" column="16" source="standard:function-signature" />
+        <error line="36" column="38" source="standard:parameter-list-wrapping" />
+        <error line="36" column="38" source="standard:function-signature" />
+    </file>
+    <file name="src/main/kotlin/com/finn/controller/CommunityController.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="9" column="1" source="standard:no-wildcard-imports" />
+        <error line="14" column="1" source="standard:no-unused-imports" />
+        <error line="23" column="43" source="standard:trailing-comma-on-declaration-site" />
+        <error line="25" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="27" column="14" source="standard:parameter-list-wrapping" />
+        <error line="27" column="14" source="standard:function-signature" />
+        <error line="27" column="61" source="standard:parameter-list-wrapping" />
+        <error line="27" column="61" source="standard:function-signature" />
+        <error line="27" column="100" source="standard:function-signature" />
+        <error line="31" column="16" source="standard:parameter-list-wrapping" />
+        <error line="31" column="16" source="standard:function-signature" />
+        <error line="31" column="40" source="standard:parameter-list-wrapping" />
+        <error line="31" column="40" source="standard:function-signature" />
+        <error line="31" column="79" source="standard:function-signature" />
+        <error line="35" column="13" source="standard:parameter-list-wrapping" />
+        <error line="35" column="13" source="standard:function-signature" />
+        <error line="35" column="35" source="standard:parameter-list-wrapping" />
+        <error line="35" column="35" source="standard:function-signature" />
+        <error line="38" column="21" source="standard:parameter-list-wrapping" />
+        <error line="38" column="21" source="standard:function-signature" />
+        <error line="38" column="43" source="standard:parameter-list-wrapping" />
+        <error line="38" column="43" source="standard:function-signature" />
+        <error line="41" column="22" source="standard:parameter-list-wrapping" />
+        <error line="41" column="22" source="standard:function-signature" />
+        <error line="41" column="55" source="standard:parameter-list-wrapping" />
+        <error line="41" column="55" source="standard:function-signature" />
+        <error line="41" column="83" source="standard:parameter-list-wrapping" />
+        <error line="41" column="83" source="standard:function-signature" />
+        <error line="41" column="108" source="standard:function-signature" />
+        <error line="45" column="16" source="standard:parameter-list-wrapping" />
+        <error line="45" column="16" source="standard:function-signature" />
+        <error line="45" column="53" source="standard:parameter-list-wrapping" />
+        <error line="45" column="53" source="standard:function-signature" />
+        <error line="45" column="86" source="standard:function-signature" />
+        <error line="51" column="73" source="standard:trailing-comma-on-declaration-site" />
+        <error line="62" column="16" source="standard:parameter-list-wrapping" />
+        <error line="62" column="16" source="standard:function-signature" />
+        <error line="62" column="40" source="standard:parameter-list-wrapping" />
+        <error line="62" column="40" source="standard:function-signature" />
+        <error line="62" column="77" source="standard:parameter-list-wrapping" />
+        <error line="62" column="77" source="standard:function-signature" />
+        <error line="68" column="21" source="standard:parameter-list-wrapping" />
+        <error line="68" column="21" source="standard:function-signature" />
+        <error line="68" column="45" source="standard:parameter-list-wrapping" />
+        <error line="68" column="45" source="standard:function-signature" />
+        <error line="68" column="72" source="standard:parameter-list-wrapping" />
+        <error line="68" column="72" source="standard:function-signature" />
+        <error line="83" column="19" source="standard:parameter-list-wrapping" />
+        <error line="83" column="19" source="standard:function-signature" />
+        <error line="83" column="60" source="standard:parameter-list-wrapping" />
+        <error line="83" column="60" source="standard:function-signature" />
+        <error line="83" column="107" source="standard:parameter-list-wrapping" />
+        <error line="83" column="107" source="standard:function-signature" />
+        <error line="83" column="110" source="standard:function-signature" />
+        <error line="87" column="21" source="standard:parameter-list-wrapping" />
+        <error line="87" column="21" source="standard:function-signature" />
+        <error line="87" column="62" source="standard:parameter-list-wrapping" />
+        <error line="87" column="62" source="standard:function-signature" />
+        <error line="87" column="109" source="standard:parameter-list-wrapping" />
+        <error line="87" column="109" source="standard:function-signature" />
+        <error line="93" column="16" source="standard:parameter-list-wrapping" />
+        <error line="93" column="16" source="standard:function-signature" />
+        <error line="93" column="38" source="standard:parameter-list-wrapping" />
+        <error line="93" column="38" source="standard:function-signature" />
+    </file>
+    <file name="src/main/kotlin/com/finn/controller/PostController.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="7" column="1" source="standard:no-wildcard-imports" />
+        <error line="21" column="43" source="standard:trailing-comma-on-declaration-site" />
+        <error line="23" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="25" column="14" source="standard:parameter-list-wrapping" />
+        <error line="25" column="14" source="standard:function-signature" />
+        <error line="25" column="40" source="standard:parameter-list-wrapping" />
+        <error line="25" column="40" source="standard:function-signature" />
+        <error line="25" column="101" source="standard:parameter-list-wrapping" />
+        <error line="25" column="101" source="standard:function-signature" />
+        <error line="25" column="135" source="standard:function-signature" />
+        <error line="29" column="16" source="standard:parameter-list-wrapping" />
+        <error line="29" column="16" source="standard:function-signature" />
+        <error line="29" column="42" source="standard:parameter-list-wrapping" />
+        <error line="29" column="42" source="standard:function-signature" />
+        <error line="29" column="103" source="standard:parameter-list-wrapping" />
+        <error line="29" column="103" source="standard:function-signature" />
+        <error line="29" column="137" source="standard:function-signature" />
+        <error line="33" column="21" source="standard:parameter-list-wrapping" />
+        <error line="33" column="21" source="standard:function-signature" />
+        <error line="33" column="45" source="standard:parameter-list-wrapping" />
+        <error line="33" column="45" source="standard:function-signature" />
+        <error line="33" column="106" source="standard:parameter-list-wrapping" />
+        <error line="33" column="106" source="standard:function-signature" />
+        <error line="33" column="140" source="standard:function-signature" />
+        <error line="37" column="13" source="standard:parameter-list-wrapping" />
+        <error line="37" column="13" source="standard:function-signature" />
+        <error line="37" column="35" source="standard:parameter-list-wrapping" />
+        <error line="37" column="35" source="standard:function-signature" />
+        <error line="40" column="16" source="standard:parameter-list-wrapping" />
+        <error line="40" column="16" source="standard:function-signature" />
+        <error line="40" column="48" source="standard:parameter-list-wrapping" />
+        <error line="40" column="48" source="standard:function-signature" />
+        <error line="40" column="76" source="standard:function-signature" />
+        <error line="46" column="68" source="standard:trailing-comma-on-declaration-site" />
+        <error line="57" column="16" source="standard:parameter-list-wrapping" />
+        <error line="57" column="16" source="standard:function-signature" />
+        <error line="57" column="40" source="standard:parameter-list-wrapping" />
+        <error line="57" column="40" source="standard:function-signature" />
+        <error line="57" column="72" source="standard:parameter-list-wrapping" />
+        <error line="57" column="72" source="standard:function-signature" />
+        <error line="63" column="16" source="standard:parameter-list-wrapping" />
+        <error line="63" column="16" source="standard:function-signature" />
+        <error line="63" column="38" source="standard:parameter-list-wrapping" />
+        <error line="63" column="38" source="standard:function-signature" />
+        <error line="69" column="19" source="standard:parameter-list-wrapping" />
+        <error line="69" column="19" source="standard:function-signature" />
+        <error line="69" column="41" source="standard:parameter-list-wrapping" />
+        <error line="69" column="41" source="standard:function-signature" />
+        <error line="72" column="17" source="standard:parameter-list-wrapping" />
+        <error line="72" column="17" source="standard:function-signature" />
+        <error line="72" column="45" source="standard:parameter-list-wrapping" />
+        <error line="72" column="45" source="standard:function-signature" />
+        <error line="72" column="73" source="standard:parameter-list-wrapping" />
+        <error line="72" column="73" source="standard:function-signature" />
+        <error line="72" column="97" source="standard:function-signature" />
+        <error line="76" column="14" source="standard:parameter-list-wrapping" />
+        <error line="76" column="14" source="standard:function-signature" />
+        <error line="76" column="55" source="standard:parameter-list-wrapping" />
+        <error line="76" column="55" source="standard:function-signature" />
+        <error line="76" column="92" source="standard:parameter-list-wrapping" />
+        <error line="76" column="92" source="standard:function-signature" />
+        <error line="76" column="95" source="standard:function-signature" />
+        <error line="80" column="16" source="standard:parameter-list-wrapping" />
+        <error line="80" column="16" source="standard:function-signature" />
+        <error line="80" column="40" source="standard:parameter-list-wrapping" />
+        <error line="80" column="40" source="standard:function-signature" />
+        <error line="80" column="78" source="standard:parameter-list-wrapping" />
+        <error line="80" column="78" source="standard:function-signature" />
+    </file>
+    <file name="src/main/kotlin/com/finn/controller/UserController.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="7" column="1" source="standard:no-wildcard-imports" />
+        <error line="13" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="15" column="13" source="standard:parameter-list-wrapping" />
+        <error line="15" column="13" source="standard:function-signature" />
+        <error line="15" column="37" source="standard:parameter-list-wrapping" />
+        <error line="15" column="37" source="standard:function-signature" />
+        <error line="16" column="14" source="standard:try-catch-finally-spacing" />
+        <error line="16" column="15" source="standard:statement-wrapping" />
+        <error line="16" column="58" source="standard:statement-wrapping" />
+        <error line="16" column="58" source="standard:try-catch-finally-spacing" />
+        <error line="16" column="83" source="standard:try-catch-finally-spacing" />
+        <error line="16" column="84" source="standard:statement-wrapping" />
+        <error line="16" column="118" source="standard:statement-wrapping" />
+        <error line="16" column="118" source="standard:try-catch-finally-spacing" />
+        <error line="19" column="16" source="standard:parameter-list-wrapping" />
+        <error line="19" column="16" source="standard:function-signature" />
+        <error line="19" column="48" source="standard:parameter-list-wrapping" />
+        <error line="19" column="48" source="standard:function-signature" />
+        <error line="19" column="76" source="standard:function-signature" />
+        <error line="23" column="16" source="standard:parameter-list-wrapping" />
+        <error line="23" column="16" source="standard:function-signature" />
+        <error line="23" column="42" source="standard:parameter-list-wrapping" />
+        <error line="23" column="42" source="standard:function-signature" />
+        <error line="23" column="74" source="standard:parameter-list-wrapping" />
+        <error line="23" column="74" source="standard:function-signature" />
+        <error line="29" column="16" source="standard:parameter-list-wrapping" />
+        <error line="29" column="16" source="standard:function-signature" />
+        <error line="29" column="40" source="standard:parameter-list-wrapping" />
+        <error line="29" column="40" source="standard:function-signature" />
+    </file>
+    <file name="src/main/kotlin/com/finn/dto/Models.kt">
+        <error line="12" column="30" source="standard:trailing-comma-on-declaration-site" />
+        <error line="23" column="23" source="standard:trailing-comma-on-declaration-site" />
+        <error line="34" column="26" source="standard:trailing-comma-on-declaration-site" />
+        <error line="44" column="21" source="standard:trailing-comma-on-declaration-site" />
+        <error line="50" column="21" source="standard:trailing-comma-on-declaration-site" />
+        <error line="56" column="26" source="standard:trailing-comma-on-declaration-site" />
+    </file>
+    <file name="src/main/kotlin/com/finn/entity/Comment.kt">
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="12" column="1" source="standard:no-blank-line-in-list" />
+        <error line="15" column="1" source="standard:no-blank-line-in-list" />
+        <error line="18" column="1" source="standard:no-blank-line-in-list" />
+        <error line="20" column="29" source="standard:trailing-comma-on-declaration-site" />
+        <error line="23" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/entity/Community.kt">
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="12" column="1" source="standard:no-blank-line-in-list" />
+        <error line="15" column="1" source="standard:no-blank-line-in-list" />
+        <error line="18" column="1" source="standard:no-blank-line-in-list" />
+        <error line="21" column="1" source="standard:no-blank-line-in-list" />
+        <error line="23" column="31" source="standard:trailing-comma-on-declaration-site" />
+        <error line="26" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/entity/Like.kt">
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="11" column="1" source="standard:no-blank-line-in-list" />
+        <error line="14" column="1" source="standard:no-blank-line-in-list" />
+        <error line="16" column="29" source="standard:trailing-comma-on-declaration-site" />
+        <error line="19" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/entity/Post.kt">
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="12" column="1" source="standard:no-blank-line-in-list" />
+        <error line="15" column="1" source="standard:no-blank-line-in-list" />
+        <error line="18" column="1" source="standard:no-blank-line-in-list" />
+        <error line="21" column="1" source="standard:no-blank-line-in-list" />
+        <error line="23" column="34" source="standard:trailing-comma-on-declaration-site" />
+        <error line="26" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/entity/User.kt">
+        <error line="15" column="1" source="standard:no-blank-line-in-list" />
+        <error line="18" column="1" source="standard:no-blank-line-in-list" />
+        <error line="21" column="1" source="standard:no-blank-line-in-list" />
+        <error line="23" column="37" source="standard:trailing-comma-on-declaration-site" />
+        <error line="26" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/entity/UserCommunity.kt">
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="11" column="1" source="standard:no-blank-line-in-list" />
+        <error line="14" column="1" source="standard:no-blank-line-in-list" />
+        <error line="16" column="34" source="standard:trailing-comma-on-declaration-site" />
+        <error line="19" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/exception/Errors.kt">
+        <error line="4" column="1" source="standard:blank-line-before-declaration" />
+        <error line="5" column="1" source="standard:blank-line-before-declaration" />
+        <error line="6" column="1" source="standard:blank-line-before-declaration" />
+        <error line="8" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/exception/GlobalExceptionHandler.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="15" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="33" column="22" source="standard:multiline-expression-wrapping" />
+    </file>
+    <file name="src/main/kotlin/com/finn/exception/UploadValidationException.kt">
+        <error line="5" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/mapper/Mappers.kt">
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="4" column="1" source="standard:no-wildcard-imports" />
+        <error line="9" column="25" source="standard:multiline-expression-wrapping" />
+        <error line="9" column="25" source="standard:function-signature" />
+        <error line="14" column="31" source="standard:trailing-comma-on-call-site" />
+        <error line="17" column="20" source="standard:multiline-expression-wrapping" />
+        <error line="17" column="20" source="standard:function-signature" />
+        <error line="22" column="103" source="standard:trailing-comma-on-call-site" />
+        <error line="25" column="23" source="standard:multiline-expression-wrapping" />
+        <error line="25" column="23" source="standard:function-signature" />
+        <error line="29" column="91" source="standard:trailing-comma-on-call-site" />
+        <error line="39" column="31" source="standard:multiline-expression-wrapping" />
+        <error line="39" column="31" source="standard:function-signature" />
+        <error line="44" column="25" source="standard:trailing-comma-on-call-site" />
+        <error line="47" column="26" source="standard:multiline-expression-wrapping" />
+        <error line="47" column="26" source="standard:function-signature" />
+        <error line="52" column="35" source="standard:trailing-comma-on-call-site" />
+        <error line="55" column="29" source="standard:multiline-expression-wrapping" />
+        <error line="55" column="29" source="standard:function-signature" />
+        <error line="59" column="25" source="standard:trailing-comma-on-call-site" />
+        <error line="62" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/repository/Repositories.kt">
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="20" column="5" source="standard:blank-line-before-declaration" />
+        <error line="21" column="5" source="standard:blank-line-before-declaration" />
+        <error line="21" column="38" source="standard:function-signature" />
+        <error line="21" column="54" source="standard:function-signature" />
+        <error line="21" column="72" source="standard:function-signature" />
+        <error line="22" column="5" source="standard:blank-line-before-declaration" />
+        <error line="22" column="43" source="standard:function-signature" />
+        <error line="22" column="62" source="standard:function-signature" />
+        <error line="22" column="80" source="standard:function-signature" />
+        <error line="23" column="5" source="standard:blank-line-before-declaration" />
+        <error line="23" column="45" source="standard:function-signature" />
+        <error line="23" column="77" source="standard:function-signature" />
+        <error line="23" column="95" source="standard:function-signature" />
+        <error line="29" column="5" source="standard:blank-line-before-declaration" />
+        <error line="35" column="5" source="standard:blank-line-before-declaration" />
+        <error line="35" column="31" source="standard:function-signature" />
+        <error line="35" column="47" source="standard:function-signature" />
+        <error line="35" column="59" source="standard:function-signature" />
+        <error line="40" column="36" source="standard:function-signature" />
+        <error line="40" column="52" source="standard:function-signature" />
+        <error line="40" column="69" source="standard:function-signature" />
+        <error line="41" column="5" source="standard:blank-line-before-declaration" />
+        <error line="42" column="5" source="standard:blank-line-before-declaration" />
+    </file>
+    <file name="src/main/kotlin/com/finn/security/FirebaseConfig.kt">
+        <error line="24" column="51" source="standard:multiline-expression-wrapping" />
+        <error line="28" column="35" source="standard:multiline-expression-wrapping" />
+        <error line="52" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/security/RateLimitFilter.kt">
+        <error line="16" column="78" source="standard:trailing-comma-on-declaration-site" />
+        <error line="18" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="23" column="35" source="standard:function-signature" />
+        <error line="23" column="64" source="standard:function-signature" />
+        <error line="23" column="95" source="standard:function-signature" />
+        <error line="23" column="113" source="standard:function-signature" />
+        <error line="24" column="19" source="standard:multiline-expression-wrapping" />
+        <error line="30" column="26" source="standard:multiline-expression-wrapping" />
+        <error line="49" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/security/RequestGuardsFilter.kt">
+        <error line="12" column="36" source="standard:trailing-comma-on-declaration-site" />
+        <error line="14" column="35" source="standard:function-signature" />
+        <error line="14" column="64" source="standard:function-signature" />
+        <error line="14" column="95" source="standard:function-signature" />
+        <error line="14" column="113" source="standard:function-signature" />
+        <error line="24" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/security/SecurityConfig.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="19" column="78" source="standard:trailing-comma-on-declaration-site" />
+        <error line="28" column="1" source="standard:max-line-length" />
+        <error line="28" column="38" source="standard:argument-list-wrapping" />
+        <error line="28" column="58" source="standard:argument-list-wrapping" />
+        <error line="28" column="76" source="standard:argument-list-wrapping" />
+        <error line="28" column="95" source="standard:argument-list-wrapping" />
+        <error line="28" column="115" source="standard:argument-list-wrapping" />
+        <error line="28" column="131" source="standard:argument-list-wrapping" />
+    </file>
+    <file name="src/main/kotlin/com/finn/security/firebase/FirebaseIdTokenVerifier.kt">
+        <error line="8" column="60" source="standard:multiline-expression-wrapping" />
+        <error line="8" column="60" source="standard:function-signature" />
+        <error line="16" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/security/guards/AppHeaderGuard.kt">
+        <error line="13" column="78" source="standard:trailing-comma-on-declaration-site" />
+        <error line="15" column="24" source="standard:function-signature" />
+        <error line="15" column="53" source="standard:function-signature" />
+        <error line="15" column="82" source="standard:function-signature" />
+        <error line="30" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/security/guards/FirebaseAppCheckGuard.kt">
+        <error line="13" column="43" source="standard:trailing-comma-on-declaration-site" />
+        <error line="15" column="24" source="standard:function-signature" />
+        <error line="15" column="53" source="standard:function-signature" />
+        <error line="15" column="82" source="standard:function-signature" />
+    </file>
+    <file name="src/main/kotlin/com/finn/security/guards/FirebaseAuthGuard.kt">
+        <error line="15" column="42" source="standard:trailing-comma-on-declaration-site" />
+        <error line="17" column="24" source="standard:function-signature" />
+        <error line="17" column="53" source="standard:function-signature" />
+        <error line="17" column="82" source="standard:function-signature" />
+    </file>
+    <file name="src/main/kotlin/com/finn/security/guards/Guard.kt">
+        <error line="7" column="15" source="standard:function-signature" />
+        <error line="7" column="44" source="standard:function-signature" />
+        <error line="7" column="73" source="standard:function-signature" />
+        <error line="10" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/main/kotlin/com/finn/service/Services.kt">
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="7" column="5" source="standard:blank-line-before-declaration" />
+        <error line="8" column="5" source="standard:blank-line-before-declaration" />
+        <error line="8" column="20" source="standard:function-signature" />
+        <error line="8" column="32" source="standard:function-signature" />
+        <error line="8" column="44" source="standard:function-signature" />
+        <error line="9" column="5" source="standard:blank-line-before-declaration" />
+        <error line="13" column="17" source="standard:function-signature" />
+        <error line="13" column="33" source="standard:function-signature" />
+        <error line="13" column="46" source="standard:function-signature" />
+        <error line="14" column="5" source="standard:blank-line-before-declaration" />
+        <error line="14" column="19" source="standard:function-signature" />
+        <error line="14" column="35" source="standard:function-signature" />
+        <error line="14" column="48" source="standard:function-signature" />
+        <error line="15" column="5" source="standard:blank-line-before-declaration" />
+        <error line="15" column="24" source="standard:function-signature" />
+        <error line="15" column="43" source="standard:function-signature" />
+        <error line="15" column="56" source="standard:function-signature" />
+        <error line="16" column="5" source="standard:blank-line-before-declaration" />
+        <error line="17" column="5" source="standard:blank-line-before-declaration" />
+        <error line="18" column="5" source="standard:blank-line-before-declaration" />
+        <error line="18" column="16" source="standard:function-signature" />
+        <error line="18" column="26" source="standard:function-signature" />
+        <error line="18" column="38" source="standard:function-signature" />
+        <error line="19" column="5" source="standard:blank-line-before-declaration" />
+        <error line="20" column="5" source="standard:blank-line-before-declaration" />
+        <error line="21" column="5" source="standard:blank-line-before-declaration" />
+        <error line="21" column="18" source="standard:function-signature" />
+        <error line="21" column="34" source="standard:function-signature" />
+        <error line="21" column="46" source="standard:function-signature" />
+        <error line="22" column="5" source="standard:blank-line-before-declaration" />
+        <error line="22" column="20" source="standard:function-signature" />
+        <error line="22" column="36" source="standard:function-signature" />
+        <error line="22" column="48" source="standard:function-signature" />
+        <error line="23" column="5" source="standard:blank-line-before-declaration" />
+        <error line="23" column="17" source="standard:function-signature" />
+        <error line="23" column="33" source="standard:function-signature" />
+        <error line="23" column="45" source="standard:function-signature" />
+        <error line="28" column="5" source="standard:blank-line-before-declaration" />
+        <error line="29" column="5" source="standard:blank-line-before-declaration" />
+        <error line="30" column="5" source="standard:blank-line-before-declaration" />
+        <error line="31" column="5" source="standard:blank-line-before-declaration" />
+        <error line="31" column="16" source="standard:function-signature" />
+        <error line="31" column="26" source="standard:function-signature" />
+        <error line="31" column="43" source="standard:function-signature" />
+        <error line="32" column="5" source="standard:blank-line-before-declaration" />
+        <error line="32" column="21" source="standard:function-signature" />
+        <error line="32" column="31" source="standard:function-signature" />
+        <error line="32" column="44" source="standard:function-signature" />
+        <error line="33" column="5" source="standard:blank-line-before-declaration" />
+        <error line="33" column="32" source="standard:function-signature" />
+        <error line="33" column="42" source="standard:function-signature" />
+        <error line="33" column="95" source="standard:function-signature" />
+        <error line="34" column="5" source="standard:blank-line-before-declaration" />
+        <error line="35" column="5" source="standard:blank-line-before-declaration" />
+        <error line="35" column="19" source="standard:function-signature" />
+        <error line="35" column="35" source="standard:function-signature" />
+        <error line="35" column="52" source="standard:function-signature" />
+        <error line="36" column="5" source="standard:blank-line-before-declaration" />
+        <error line="36" column="21" source="standard:function-signature" />
+        <error line="36" column="37" source="standard:function-signature" />
+        <error line="36" column="54" source="standard:function-signature" />
+        <error line="37" column="5" source="standard:blank-line-before-declaration" />
+        <error line="37" column="22" source="standard:function-signature" />
+        <error line="37" column="38" source="standard:function-signature" />
+        <error line="37" column="55" source="standard:function-signature" />
+        <error line="38" column="5" source="standard:blank-line-before-declaration" />
+        <error line="43" column="5" source="standard:blank-line-before-declaration" />
+        <error line="44" column="5" source="standard:blank-line-before-declaration" />
+        <error line="45" column="5" source="standard:blank-line-before-declaration" />
+        <error line="46" column="5" source="standard:blank-line-before-declaration" />
+        <error line="46" column="16" source="standard:function-signature" />
+        <error line="46" column="26" source="standard:function-signature" />
+        <error line="46" column="41" source="standard:function-signature" />
+        <error line="47" column="5" source="standard:blank-line-before-declaration" />
+    </file>
+    <file name="src/main/kotlin/com/finn/service/impl/CommentServiceImpl.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="14" column="53" source="standard:trailing-comma-on-declaration-site" />
+        <error line="16" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="18" column="61" source="standard:function-signature" />
+        <error line="22" column="63" source="standard:function-signature" />
+        <error line="38" column="25" source="standard:function-signature" />
+        <error line="38" column="35" source="standard:function-signature" />
+        <error line="38" column="50" source="standard:function-signature" />
+    </file>
+    <file name="src/main/kotlin/com/finn/service/impl/CommunityServiceImpl.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="20" column="57" source="standard:trailing-comma-on-declaration-site" />
+        <error line="22" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="52" column="25" source="standard:function-signature" />
+        <error line="52" column="35" source="standard:function-signature" />
+        <error line="52" column="52" source="standard:function-signature" />
+        <error line="62" column="30" source="standard:function-signature" />
+        <error line="62" column="40" source="standard:function-signature" />
+        <error line="62" column="53" source="standard:function-signature" />
+        <error line="69" column="41" source="standard:function-signature" />
+        <error line="69" column="51" source="standard:function-signature" />
+        <error line="69" column="104" source="standard:function-signature" />
+        <error line="84" column="28" source="standard:function-signature" />
+        <error line="84" column="44" source="standard:function-signature" />
+        <error line="84" column="61" source="standard:function-signature" />
+        <error line="93" column="30" source="standard:function-signature" />
+        <error line="93" column="46" source="standard:function-signature" />
+        <error line="93" column="63" source="standard:function-signature" />
+        <error line="99" column="31" source="standard:function-signature" />
+        <error line="99" column="47" source="standard:function-signature" />
+        <error line="99" column="64" source="standard:function-signature" />
+        <error line="99" column="73" source="standard:function-signature" />
+    </file>
+    <file name="src/main/kotlin/com/finn/service/impl/PostServiceImpl.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="24" column="65" source="standard:trailing-comma-on-declaration-site" />
+        <error line="26" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="28" column="26" source="standard:function-signature" />
+        <error line="28" column="42" source="standard:function-signature" />
+        <error line="28" column="51" source="standard:function-signature" />
+        <error line="39" column="28" source="standard:function-signature" />
+        <error line="39" column="44" source="standard:function-signature" />
+        <error line="39" column="53" source="standard:function-signature" />
+        <error line="45" column="33" source="standard:function-signature" />
+        <error line="45" column="52" source="standard:function-signature" />
+        <error line="45" column="61" source="standard:function-signature" />
+        <error line="63" column="25" source="standard:function-signature" />
+        <error line="63" column="35" source="standard:function-signature" />
+        <error line="63" column="47" source="standard:function-signature" />
+        <error line="79" column="27" source="standard:function-signature" />
+        <error line="79" column="43" source="standard:function-signature" />
+        <error line="79" column="55" source="standard:function-signature" />
+        <error line="87" column="29" source="standard:function-signature" />
+        <error line="87" column="45" source="standard:function-signature" />
+        <error line="87" column="57" source="standard:function-signature" />
+        <error line="93" column="26" source="standard:function-signature" />
+        <error line="93" column="42" source="standard:function-signature" />
+        <error line="93" column="54" source="standard:function-signature" />
+    </file>
+    <file name="src/main/kotlin/com/finn/service/impl/UserServiceImpl.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="16" column="47" source="standard:trailing-comma-on-declaration-site" />
+        <error line="18" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="33" column="29" source="standard:function-signature" />
+        <error line="33" column="41" source="standard:function-signature" />
+        <error line="33" column="53" source="standard:function-signature" />
+    </file>
+    <file name="src/main/kotlin/com/finn/storage/LocalFileStorageService.kt">
+        <error line="13" column="73" source="standard:trailing-comma-on-declaration-site" />
+    </file>
+    <file name="src/main/kotlin/com/finn/storage/StorageService.kt">
+        <error line="7" column="5" source="standard:blank-line-before-declaration" />
+        <error line="10" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/test/kotlin/com/finn/ApiParityTests.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="4" column="1" source="standard:no-wildcard-imports" />
+        <error line="5" column="1" source="standard:no-wildcard-imports" />
+        <error line="17" column="1" source="standard:no-wildcard-imports" />
+        <error line="18" column="1" source="standard:no-wildcard-imports" />
+        <error line="31" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="47" column="1" source="standard:spacing-between-declarations-with-annotations" />
+        <error line="48" column="1" source="standard:spacing-between-declarations-with-annotations" />
+        <error line="49" column="1" source="standard:spacing-between-declarations-with-annotations" />
+        <error line="50" column="1" source="standard:spacing-between-declarations-with-annotations" />
+        <error line="63" column="1" source="standard:max-line-length" />
+        <error line="98" column="20" source="standard:multiline-expression-wrapping" />
+        <error line="99" column="1" source="standard:indent" />
+        <error line="100" column="1" source="standard:indent" />
+        <error line="101" column="1" source="standard:indent" />
+        <error line="102" column="1" source="standard:indent" />
+        <error line="110" column="23" source="standard:multiline-expression-wrapping" />
+        <error line="111" column="1" source="standard:indent" />
+        <error line="112" column="1" source="standard:indent" />
+        <error line="113" column="1" source="standard:indent" />
+        <error line="114" column="1" source="standard:indent" />
+        <error line="118" column="22" source="standard:multiline-expression-wrapping" />
+        <error line="132" column="23" source="standard:multiline-expression-wrapping" />
+        <error line="133" column="1" source="standard:indent" />
+        <error line="134" column="1" source="standard:indent" />
+        <error line="135" column="1" source="standard:indent" />
+        <error line="136" column="1" source="standard:indent" />
+        <error line="148" column="23" source="standard:multiline-expression-wrapping" />
+        <error line="149" column="1" source="standard:indent" />
+        <error line="150" column="1" source="standard:indent" />
+        <error line="151" column="1" source="standard:indent" />
+        <error line="152" column="1" source="standard:indent" />
+        <error line="184" column="23" source="standard:multiline-expression-wrapping" />
+        <error line="185" column="1" source="standard:indent" />
+        <error line="186" column="1" source="standard:indent" />
+        <error line="187" column="1" source="standard:indent" />
+        <error line="188" column="1" source="standard:indent" />
+        <error line="192" column="22" source="standard:multiline-expression-wrapping" />
+        <error line="205" column="23" source="standard:multiline-expression-wrapping" />
+        <error line="206" column="1" source="standard:indent" />
+        <error line="207" column="1" source="standard:indent" />
+        <error line="208" column="1" source="standard:indent" />
+    </file>
+    <file name="src/test/kotlin/com/finn/IntegrationTests.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="4" column="1" source="standard:no-wildcard-imports" />
+        <error line="5" column="1" source="standard:no-wildcard-imports" />
+        <error line="22" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="38" column="1" source="standard:spacing-between-declarations-with-annotations" />
+        <error line="39" column="1" source="standard:spacing-between-declarations-with-annotations" />
+        <error line="40" column="1" source="standard:spacing-between-declarations-with-annotations" />
+        <error line="66" column="1" source="standard:max-line-length" />
+        <error line="66" column="44" source="standard:argument-list-wrapping" />
+        <error line="66" column="57" source="standard:argument-list-wrapping" />
+        <error line="66" column="68" source="standard:argument-list-wrapping" />
+        <error line="66" column="87" source="standard:argument-list-wrapping" />
+        <error line="66" column="111" source="standard:argument-list-wrapping" />
+        <error line="66" column="130" source="standard:argument-list-wrapping" />
+        <error line="66" column="142" source="standard:argument-list-wrapping" />
+        <error line="66" column="143" source="standard:argument-list-wrapping" />
+    </file>
+    <file name="src/test/kotlin/com/finn/controller/PostControllerLikesAndPagingTest.kt">
+        <error line="20" column="1" source="standard:no-wildcard-imports" />
+        <error line="21" column="1" source="standard:no-wildcard-imports" />
+        <error line="31" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="47" column="1" source="standard:spacing-between-declarations-with-annotations" />
+        <error line="48" column="1" source="standard:spacing-between-declarations-with-annotations" />
+        <error line="49" column="1" source="standard:spacing-between-declarations-with-annotations" />
+        <error line="110" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/test/kotlin/com/finn/controller/UserControllerValidationTest.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="17" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="22" column="20" source="standard:multiline-expression-wrapping" />
+        <error line="23" column="1" source="standard:indent" />
+        <error line="24" column="1" source="standard:indent" />
+        <error line="30" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/test/kotlin/com/finn/mapper/MappersTest.kt">
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="4" column="1" source="standard:no-wildcard-imports" />
+        <error line="5" column="1" source="standard:no-wildcard-imports" />
+        <error line="9" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="51" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/test/kotlin/com/finn/security/RateLimitFilterTest.kt">
+        <error line="6" column="1" source="standard:no-wildcard-imports" />
+        <error line="12" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="38" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/test/kotlin/com/finn/security/guards/AppHeaderGuardTest.kt">
+        <error line="3" column="1" source="standard:no-wildcard-imports" />
+        <error line="9" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="12" column="1" source="standard:max-line-length" />
+        <error line="12" column="20" source="standard:property-wrapping" />
+        <error line="12" column="36" source="standard:argument-list-wrapping" />
+        <error line="12" column="61" source="standard:argument-list-wrapping" />
+        <error line="12" column="99" source="standard:argument-list-wrapping" />
+        <error line="12" column="136" source="standard:argument-list-wrapping" />
+        <error line="12" column="155" source="standard:argument-list-wrapping" />
+        <error line="24" column="1" source="standard:max-line-length" />
+        <error line="24" column="20" source="standard:property-wrapping" />
+        <error line="24" column="36" source="standard:argument-list-wrapping" />
+        <error line="24" column="61" source="standard:argument-list-wrapping" />
+        <error line="24" column="99" source="standard:argument-list-wrapping" />
+        <error line="24" column="136" source="standard:argument-list-wrapping" />
+        <error line="24" column="155" source="standard:argument-list-wrapping" />
+        <error line="36" column="1" source="standard:max-line-length" />
+        <error line="36" column="20" source="standard:property-wrapping" />
+        <error line="36" column="36" source="standard:argument-list-wrapping" />
+        <error line="36" column="61" source="standard:argument-list-wrapping" />
+        <error line="36" column="99" source="standard:argument-list-wrapping" />
+        <error line="36" column="136" source="standard:argument-list-wrapping" />
+        <error line="36" column="155" source="standard:argument-list-wrapping" />
+        <error line="47" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/test/kotlin/com/finn/security/guards/FirebaseGuardsTest.kt">
+        <error line="5" column="1" source="standard:no-wildcard-imports" />
+        <error line="11" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="50" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/test/kotlin/com/finn/security/guards/RequestGuardsFilterTest.kt">
+        <error line="7" column="1" source="standard:no-wildcard-imports" />
+        <error line="13" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="16" column="20" source="standard:multiline-expression-wrapping" />
+        <error line="17" column="32" source="standard:function-signature" />
+        <error line="17" column="82" source="standard:function-signature" />
+        <error line="17" column="132" source="standard:function-signature" />
+        <error line="19" column="20" source="standard:multiline-expression-wrapping" />
+        <error line="20" column="1" source="standard:max-line-length" />
+        <error line="20" column="32" source="standard:parameter-list-wrapping" />
+        <error line="20" column="32" source="standard:function-signature" />
+        <error line="20" column="82" source="standard:parameter-list-wrapping" />
+        <error line="20" column="82" source="standard:function-signature" />
+        <error line="20" column="132" source="standard:parameter-list-wrapping" />
+        <error line="20" column="132" source="standard:function-signature" />
+        <error line="39" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/test/kotlin/com/finn/service/CommunityServiceImageUpdateTest.kt">
+        <error line="15" column="1" source="standard:no-wildcard-imports" />
+        <error line="18" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="40" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+    <file name="src/test/kotlin/com/finn/storage/LocalFileStorageServiceTest.kt">
+        <error line="4" column="1" source="standard:no-wildcard-imports" />
+        <error line="12" column="1" source="standard:no-empty-first-line-in-class-body" />
+        <error line="44" column="1" source="standard:no-consecutive-blank-lines" />
+    </file>
+</baseline>
