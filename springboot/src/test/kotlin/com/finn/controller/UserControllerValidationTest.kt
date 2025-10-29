@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@ActiveProfiles("local")
 class UserControllerValidationTest {
 
     @Autowired lateinit var mockMvc: MockMvc
@@ -26,4 +26,3 @@ class UserControllerValidationTest {
             .andExpect(status().isBadRequest)
     }
 }
-

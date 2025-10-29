@@ -26,7 +26,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 class PostControllerLikesAndPagingTest {
 
     companion object {
@@ -106,4 +106,3 @@ class PostControllerLikesAndPagingTest {
             .andExpect(jsonPath("$", hasSize<Any>(5)))
     }
 }
-

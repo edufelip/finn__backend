@@ -22,13 +22,14 @@ class CommunityServiceImageUpdateTest {
         val userCommunityRepository = mockk<UserCommunityRepository>(relaxed = true)
         val storage = mockk<StorageService>(relaxed = true)
 
-        val comm = Community(id = 10, title = "T", description = "D", image = "old.png", userId = "u")
-        every { communityRepository.findById(10) } returns Optional.of(comm)
+        val comm = Community(id = 10L, title = "T", description = "D", image = "old.png", userId = "u")
+        every { communityRepository.findById(10L) } returns Optional.of(comm)
         every { storage.storePngWithChecks(any()) } returns "new.png"
+        every { communityRepository.save(any()) } answers { invocation.args[0] as Community }
 
         val service = CommunityServiceImpl(communityRepository, userCommunityRepository, storage)
         val file = MockMultipartFile("community", "a.png", "image/png", ByteArray(10))
-        service.updateImageWithStorage(10, file)
+        service.updateImageWithStorage(10L, file)
 
         val savedSlot: CapturingSlot<Community> = slot()
         verify { communityRepository.save(capture(savedSlot)) }
@@ -36,4 +37,3 @@ class CommunityServiceImageUpdateTest {
         verify { storage.deleteIfExists("old.png") }
     }
 }
-

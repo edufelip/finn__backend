@@ -3,6 +3,7 @@ package com.finn.exception
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.MediaType
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -12,7 +13,6 @@ data class ErrorResponse(val status: Int, val error: String, val message: String
 
 @ControllerAdvice
 class GlobalExceptionHandler {
-
     @ExceptionHandler(NotFoundException::class)
     fun handleNotFound(ex: NotFoundException): ResponseEntity<ErrorResponse> =
         ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -34,8 +34,26 @@ class GlobalExceptionHandler {
             .filterIsInstance<FieldError>()
             .associate { it.field to it.defaultMessage }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body(ErrorResponse(400, "Validation Failed", "Validation error", errors))
+            .body(
+                ErrorResponse(
+                    status = 400,
+                    error = "Validation Failed",
+                    message = "Validation error",
+                    details = errors,
+                ),
+            )
     }
+
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun handleMalformedRequest(ex: HttpMessageNotReadableException): ResponseEntity<ErrorResponse> =
+        ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(
+                ErrorResponse(
+                    status = 400,
+                    error = "Bad Request",
+                    message = ex.mostSpecificCause.message ?: ex.message,
+                ),
+            )
 
     @ExceptionHandler(Exception::class)
     fun handleGeneric(ex: Exception): ResponseEntity<ErrorResponse> =
