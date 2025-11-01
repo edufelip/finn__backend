@@ -6,14 +6,11 @@ spring:
     name: finn-backend
   flyway:
     enabled: true
-app:
-  upload:
-    dir: ../public
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DB_HOST:${SPRING_DB_HOST:localhost}}:${DB_PORT:${SPRING_DB_PORT:5432}}/${DB_NAME:${SPRING_DB_NAME:finn}}
-    username: ${DB_USER:${SPRING_DB_USER:postgres}}
-    password: ${DB_PASSWORD:${SPRING_DB_PASSWORD:postgres}}
+    url: jdbc:postgresql://${DB_HOST:${SPRING_DB_HOST:***REMOVED***}}:${DB_PORT:${SPRING_DB_PORT:5432}}/${DB_NAME:${***REMOVED***}}
+    username: ${DB_USER:${***REMOVED***}}
+    password: ${DB_PASSWORD:${SPRING_DB_PASSWORD:***REMOVED***}}
     hikari:
       maximum-pool-size: 10
   jpa:
@@ -23,6 +20,9 @@ app:
       hibernate:
         format_sql: true
     open-in-view: false
+app:
+  upload:
+    dir: ../public
 
 security:
   requireAppHeader: true
@@ -45,6 +45,9 @@ spring:
       on-profile: test
   datasource:
     url: jdbc:postgresql://${DB_HOST:${SPRING_DB_HOST:localhost}}:${DB_PORT:${SPRING_DB_PORT:5432}}/${DEVDB_NAME:${SPRING_DB_NAME:finn_test}}
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USER:${SPRING_DB_USER:postgres}}
+    password: ${DB_PASSWORD:${SPRING_DB_PASSWORD:postgres}}
   flyway:
     enabled: true
   jpa:
@@ -54,6 +57,67 @@ spring:
 app:
   upload:
     dir: ../public
+
+security:
+  requireAppHeader: false
+  disableAuth: true
+  requireAppCheck: false
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local-db
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${LOCAL_DB_HOST:localhost}:${LOCAL_DB_PORT:5432}/${LOCAL_DB_NAME:finn_local}
+    username: ${LOCAL_DB_USER:postgres}
+    password: ${LOCAL_DB_PASSWORD:postgres}
+  flyway:
+    enabled: true
+
+security:
+  requireAppHeader: false
+  disableAuth: true
+  requireAppCheck: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${PROD_DB_HOST:${DB_HOST}}:${PROD_DB_PORT:${DB_PORT}}/${PROD_DB_NAME:finn_prod}
+    username: ${PROD_DB_USER:${DB_USER}}
+    password: ${PROD_DB_PASSWORD:${DB_PASSWORD}}
+  flyway:
+    baseline-on-migrate: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:h2:mem:finn;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 security:
   requireAppHeader: false

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS communities (
-    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     title VARCHAR(25) NOT NULL UNIQUE,
     description VARCHAR(100) NOT NULL,
     image TEXT,
@@ -17,11 +17,11 @@ CREATE TABLE IF NOT EXISTS communities (
 );
 
 CREATE TABLE IF NOT EXISTS posts (
-    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     content TEXT NOT NULL,
     image TEXT,
     user_id TEXT,
-    community_id INT,
+    community_id BIGINT,
     date TIMESTAMP DEFAULT now(),
     CONSTRAINT post_belongsTo_community
         FOREIGN KEY (community_id) REFERENCES communities (id) ON DELETE CASCADE,
@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS posts (
 );
 
 CREATE TABLE IF NOT EXISTS comments (
-    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     content VARCHAR(200) NOT NULL,
     user_id TEXT,
-    post_id INT,
+    post_id BIGINT,
     date TIMESTAMP DEFAULT now(),
     CONSTRAINT comment_belongsTo_user
         FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
@@ -42,9 +42,9 @@ CREATE TABLE IF NOT EXISTS comments (
 );
 
 CREATE TABLE IF NOT EXISTS userscommunities (
-    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id TEXT,
-    community_id INT,
+    community_id BIGINT,
     date TIMESTAMP DEFAULT now(),
     CONSTRAINT user_belongsToMany_communities
         FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
@@ -53,12 +53,11 @@ CREATE TABLE IF NOT EXISTS userscommunities (
 );
 
 CREATE TABLE IF NOT EXISTS likes (
-    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id TEXT,
-    post_id INT,
+    post_id BIGINT,
     CONSTRAINT user_likes_post
         FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     CONSTRAINT post_has_likes
         FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE
 );
-
