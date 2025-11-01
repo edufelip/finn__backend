@@ -8,18 +8,17 @@ import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.DynamicPropertyRegistry
+import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
-import org.springframework.test.context.DynamicPropertyRegistry
-import org.springframework.test.context.DynamicPropertySource
 
 @SpringBootTest
 @ActiveProfiles("test")
 @Testcontainers(disabledWithoutDocker = true)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class IntegrationTests {
-
     companion object {
         @Container
         @JvmStatic
@@ -35,8 +34,11 @@ class IntegrationTests {
     }
 
     @Autowired lateinit var userService: UserService
+
     @Autowired lateinit var communityService: CommunityService
+
     @Autowired lateinit var postService: PostService
+
     @Autowired lateinit var commentService: CommentService
 
     @Test
@@ -63,7 +65,10 @@ class IntegrationTests {
     @Test
     fun posts_and_likes_flow() {
         userService.createUser(UserDto(id = "user-3", name = "Carol"))
-        val comm = communityService.create(CommunityDto(id = null, title = "Android", description = "Mobile", userId = "user-3", image = null))
+        val comm =
+            communityService.create(
+                CommunityDto(id = null, title = "Android", description = "Mobile", userId = "user-3", image = null),
+            )
         communityService.subscribe("user-3", comm.id!!)
         val post = postService.create(PostDto(id = null, content = "hello", image = null, userId = "user-3", communityId = comm.id!!))
         assertEquals(0, postService.likeCount(post.id!!))

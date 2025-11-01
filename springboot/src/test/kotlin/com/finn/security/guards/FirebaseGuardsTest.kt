@@ -8,7 +8,6 @@ import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.mock.web.MockHttpServletResponse
 
 class FirebaseGuardsTest {
-
     @Test
     fun `app check guard accepts valid and rejects invalid`() {
         val okVerifier = AppCheckVerifier { true }
@@ -46,4 +45,3 @@ class FirebaseGuardsTest {
         assertEquals(401, resp2.status)
     }
 }
-

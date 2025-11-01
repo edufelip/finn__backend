@@ -10,18 +10,25 @@ import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.mock.web.MockHttpServletResponse
 
 class RequestGuardsFilterTest {
-
     @Test
     fun `stops chain when a guard fails`() {
-        val pass = object : Guard {
-            override fun check(request: jakarta.servlet.http.HttpServletRequest, response: jakarta.servlet.http.HttpServletResponse) = true
-        }
-        val fail = object : Guard {
-            override fun check(request: jakarta.servlet.http.HttpServletRequest, response: jakarta.servlet.http.HttpServletResponse): Boolean {
-                response.status = 418
-                return false
+        val pass =
+            object : Guard {
+                override fun check(
+                    request: jakarta.servlet.http.HttpServletRequest,
+                    response: jakarta.servlet.http.HttpServletResponse,
+                ) = true
             }
-        }
+        val fail =
+            object : Guard {
+                override fun check(
+                    request: jakarta.servlet.http.HttpServletRequest,
+                    response: jakarta.servlet.http.HttpServletResponse,
+                ): Boolean {
+                    response.status = 418
+                    return false
+                }
+            }
         var proceeded = false
         val chain = FilterChain { _: ServletRequest, _: ServletResponse -> proceeded = true }
 
@@ -35,4 +42,3 @@ class RequestGuardsFilterTest {
         assertEquals(418, resp.status)
     }
 }
-

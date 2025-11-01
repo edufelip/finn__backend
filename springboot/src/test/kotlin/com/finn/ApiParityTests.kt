@@ -1,8 +1,16 @@
 package com.finn
 
-import com.finn.dto.*
-import com.finn.service.*
-import org.hamcrest.Matchers.*
+import com.finn.dto.CommentDto
+import com.finn.dto.CommunityDto
+import com.finn.dto.PostDto
+import com.finn.dto.UserDto
+import com.finn.service.CommentService
+import com.finn.service.CommunityService
+import com.finn.service.PostService
+import com.finn.service.UserService
+import org.hamcrest.Matchers.greaterThanOrEqualTo
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.notNullValue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -10,16 +18,20 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
+import org.springframework.mock.web.MockMultipartFile
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
-import org.springframework.mock.web.MockMultipartFile
 import java.io.File
 
 @SpringBootTest
@@ -28,7 +40,6 @@ import java.io.File
 @Testcontainers(disabledWithoutDocker = true)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ApiParityTests {
-
     companion object {
         @Container
         @JvmStatic
@@ -44,9 +55,13 @@ class ApiParityTests {
     }
 
     @Autowired lateinit var mockMvc: MockMvc
+
     @Autowired lateinit var userService: UserService
+
     @Autowired lateinit var communityService: CommunityService
+
     @Autowired lateinit var postService: PostService
+
     @Autowired lateinit var commentService: CommentService
 
     lateinit var userId: String
@@ -58,10 +73,36 @@ class ApiParityTests {
     fun seed() {
         userId = "user-parity"
         userService.createUser(UserDto(id = userId, name = "Tester"))
-        val comm = communityService.create(CommunityDto(id = null, title = "Parity", description = "Desc", userId = userId, image = null))
+        val comm =
+            communityService.create(
+                CommunityDto(
+                    id = null,
+                    title = "Parity",
+                    description = "Desc",
+                    userId = userId,
+                    image = null,
+                ),
+            )
         communityId = comm.id!!
-        postId = postService.create(PostDto(id = null, content = "hello world", image = null, userId = userId, communityId = communityId)).id!!
-        commentId = commentService.create(CommentDto(id = null, content = "nice", userId = userId, postId = postId)).id!!
+        postId =
+            postService.create(
+                PostDto(
+                    id = null,
+                    content = "hello world",
+                    image = null,
+                    userId = userId,
+                    communityId = communityId,
+                ),
+            ).id!!
+        commentId =
+            commentService.create(
+                CommentDto(
+                    id = null,
+                    content = "nice",
+                    userId = userId,
+                    postId = postId,
+                ),
+            ).id!!
     }
 
     @Test
@@ -95,19 +136,25 @@ class ApiParityTests {
     @Test
     fun comment_validation_too_long_returns_400() {
         val longContent = (1..210).joinToString("") { "x" }
-        val body = "{" +
+        val body =
+            "{" +
                 "\"content\":\"$longContent\"," +
                 "\"userId\":\"$userId\"," +
                 "\"postId\":$postId" +
                 "}"
-        mockMvc.perform(post("/comments").contentType(MediaType.APPLICATION_JSON).content(body))
+        mockMvc.perform(
+            post("/comments")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body),
+        )
             .andExpect(status().isBadRequest)
     }
 
     @Test
     fun community_create_with_png_succeeds_and_file_saved() {
         val bytes = ByteArray(1024) { 0x00 }
-        val payload = "{" +
+        val payload =
+            "{" +
                 "\"title\":\"random title\"," +
                 "\"description\":\"random description\"," +
                 "\"userId\":\"$userId\"" +
@@ -115,10 +162,15 @@ class ApiParityTests {
         val jsonPart = MockMultipartFile("community", "community", "application/json", payload.toByteArray())
         val filePart = MockMultipartFile("community", "test.png", "image/png", bytes)
 
-        val result = mockMvc.perform(multipart("/communities").file(filePart).file(jsonPart))
-            .andExpect(status().isCreated)
-            .andExpect(jsonPath("$.image", notNullValue()))
-            .andReturn()
+        val result =
+            mockMvc.perform(
+                multipart("/communities")
+                    .file(filePart)
+                    .file(jsonPart),
+            )
+                .andExpect(status().isCreated)
+                .andExpect(jsonPath("$.image", notNullValue()))
+                .andReturn()
         val body = result.response.contentAsString
         val image = Regex("\"image\":\"([^\"]+)\"").find(body)?.groupValues?.get(1)
         if (image != null) {
@@ -129,7 +181,8 @@ class ApiParityTests {
     @Test
     fun community_create_wrong_ext_returns_500_text() {
         val bytes = ByteArray(1024) { 0x01 }
-        val payload = "{" +
+        val payload =
+            "{" +
                 "\"title\":\"random title\"," +
                 "\"description\":\"random description\"," +
                 "\"userId\":\"$userId\"" +
@@ -137,7 +190,11 @@ class ApiParityTests {
         val jsonPart = MockMultipartFile("community", "community", "application/json", payload.toByteArray())
         val filePart = MockMultipartFile("community", "test.jpg", "image/jpeg", bytes)
 
-        mockMvc.perform(multipart("/communities").file(filePart).file(jsonPart))
+        mockMvc.perform(
+            multipart("/communities")
+                .file(filePart)
+                .file(jsonPart),
+        )
             .andExpect(status().isInternalServerError)
             .andExpect(content().string("File must be .png"))
     }
@@ -145,7 +202,8 @@ class ApiParityTests {
     @Test
     fun community_create_large_file_returns_500_text() {
         val bytes = ByteArray(350 * 1024) { 0x02 }
-        val payload = "{" +
+        val payload =
+            "{" +
                 "\"title\":\"random title\"," +
                 "\"description\":\"random description\"," +
                 "\"userId\":\"$userId\"" +
@@ -153,27 +211,55 @@ class ApiParityTests {
         val jsonPart = MockMultipartFile("community", "community", "application/json", payload.toByteArray())
         val filePart = MockMultipartFile("community", "testLarge.png", "image/png", bytes)
 
-        mockMvc.perform(multipart("/communities").file(filePart).file(jsonPart))
+        mockMvc.perform(
+            multipart("/communities")
+                .file(filePart)
+                .file(jsonPart),
+        )
             .andExpect(status().isInternalServerError)
             .andExpect(content().string("File too large"))
     }
 
     @Test
     fun community_update_image_wrong_ext_returns_500_text() {
-        val comm = communityService.create(CommunityDto(id = null, title = "UpImg", description = "Desc", userId = userId, image = null))
+        val comm =
+            communityService.create(
+                CommunityDto(
+                    id = null,
+                    title = "UpImg",
+                    description = "Desc",
+                    userId = userId,
+                    image = null,
+                ),
+            )
         val bytes = ByteArray(1024) { 0x03 }
         val filePart = MockMultipartFile("community", "test.jpg", "image/jpeg", bytes)
-        mockMvc.perform(multipart("/communities/{id}/image", comm.id!!).file(filePart))
+        mockMvc.perform(
+            multipart("/communities/{id}/image", comm.id!!)
+                .file(filePart),
+        )
             .andExpect(status().isInternalServerError)
             .andExpect(content().string("File must be .png"))
     }
 
     @Test
     fun community_update_image_large_returns_500_text() {
-        val comm = communityService.create(CommunityDto(id = null, title = "UpLarge", description = "Desc", userId = userId, image = null))
+        val comm =
+            communityService.create(
+                CommunityDto(
+                    id = null,
+                    title = "UpLarge",
+                    description = "Desc",
+                    userId = userId,
+                    image = null,
+                ),
+            )
         val bytes = ByteArray(350 * 1024) { 0x04 }
         val filePart = MockMultipartFile("community", "testLarge.png", "image/png", bytes)
-        mockMvc.perform(multipart("/communities/{id}/image", comm.id!!).file(filePart))
+        mockMvc.perform(
+            multipart("/communities/{id}/image", comm.id!!)
+                .file(filePart),
+        )
             .andExpect(status().isInternalServerError)
             .andExpect(content().string("File too large"))
     }
@@ -181,7 +267,8 @@ class ApiParityTests {
     @Test
     fun posts_create_with_png_succeeds() {
         val bytes = ByteArray(1024) { 0x05 }
-        val payload = "{" +
+        val payload =
+            "{" +
                 "\"content\":\"new content\"," +
                 "\"userId\":\"$userId\"," +
                 "\"communityId\":$communityId" +
@@ -189,10 +276,15 @@ class ApiParityTests {
         val jsonPart = MockMultipartFile("post", "post", "application/json", payload.toByteArray())
         val filePart = MockMultipartFile("post", "test.png", "image/png", bytes)
 
-        val result = mockMvc.perform(multipart("/posts").file(filePart).file(jsonPart))
-            .andExpect(status().isCreated)
-            .andExpect(jsonPath("$.image", notNullValue()))
-            .andReturn()
+        val result =
+            mockMvc.perform(
+                multipart("/posts")
+                    .file(filePart)
+                    .file(jsonPart),
+            )
+                .andExpect(status().isCreated)
+                .andExpect(jsonPath("$.image", notNullValue()))
+                .andReturn()
         val body = result.response.contentAsString
         val image = Regex("\"image\":\"([^\"]+)\"").find(body)?.groupValues?.get(1)
         if (image != null) {
@@ -202,11 +294,16 @@ class ApiParityTests {
 
     @Test
     fun community_subscribe_and_unsubscribe_endpoints() {
-        val payload = "{" +
+        val payload =
+            "{" +
                 "\"user_id\":\"$userId\"," +
                 "\"community_id\":$communityId" +
                 "}"
-        mockMvc.perform(post("/communities/subscribe").contentType(MediaType.APPLICATION_JSON).content(payload))
+        mockMvc.perform(
+            post("/communities/subscribe")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(payload),
+        )
             .andExpect(status().isCreated)
 
         // Should be subscribed
@@ -214,7 +311,11 @@ class ApiParityTests {
             .andExpect(status().isOk)
 
         // Unsubscribe
-        mockMvc.perform(post("/communities/unsubscribe").contentType(MediaType.APPLICATION_JSON).content(payload))
+        mockMvc.perform(
+            post("/communities/unsubscribe")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(payload),
+        )
             .andExpect(status().isNoContent)
     }
 }

@@ -10,7 +10,7 @@ import java.security.SecureRandom
 
 @Service
 class LocalFileStorageService(
-    @Value("\${app.upload.dir:../public}") private val uploadDir: String
+    @Value("\${app.upload.dir:../public}") private val uploadDir: String,
 ) : StorageService {
     private val random = SecureRandom()
     private val baseDir = File(uploadDir)

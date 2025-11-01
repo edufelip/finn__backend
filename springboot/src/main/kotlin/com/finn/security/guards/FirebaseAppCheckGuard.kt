@@ -10,9 +10,12 @@ import org.springframework.stereotype.Component
 class FirebaseAppCheckGuard(
     @Value("\${security.requireAppCheck:true}") private val requireAppCheck: Boolean,
     @Value("\${security.disableAuth:false}") private val disableAuth: Boolean,
-    private val verifier: AppCheckVerifier
+    private val verifier: AppCheckVerifier,
 ) : Guard {
-    override fun check(request: HttpServletRequest, response: HttpServletResponse): Boolean {
+    override fun check(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+    ): Boolean {
         if (!requireAppCheck || disableAuth) return true
         val token = request.getHeader("X-Firebase-AppCheck")
         if (token.isNullOrBlank()) {

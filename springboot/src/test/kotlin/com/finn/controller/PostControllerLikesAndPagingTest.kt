@@ -28,7 +28,6 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @ActiveProfiles("test")
 @Testcontainers(disabledWithoutDocker = true)
 class PostControllerLikesAndPagingTest {
-
     companion object {
         @Container
         @JvmStatic
@@ -44,8 +43,11 @@ class PostControllerLikesAndPagingTest {
     }
 
     @Autowired lateinit var mockMvc: MockMvc
+
     @Autowired lateinit var userService: UserService
+
     @Autowired lateinit var communityService: CommunityService
+
     @Autowired lateinit var postService: PostService
 
     lateinit var userId: String

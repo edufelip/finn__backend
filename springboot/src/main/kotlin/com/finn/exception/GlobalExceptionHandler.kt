@@ -1,8 +1,8 @@
 package com.finn.exception
 
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -30,9 +30,10 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidation(ex: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
-        val errors = ex.bindingResult.allErrors
-            .filterIsInstance<FieldError>()
-            .associate { it.field to it.defaultMessage }
+        val errors =
+            ex.bindingResult.allErrors
+                .filterIsInstance<FieldError>()
+                .associate { it.field to it.defaultMessage }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(
                 ErrorResponse(

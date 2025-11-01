@@ -9,7 +9,7 @@ data class UserDto(
     val id: String,
     @field:NotBlank
     val name: String,
-    val photo: String? = null
+    val photo: String? = null,
 )
 
 data class CommunityDto(
@@ -20,7 +20,7 @@ data class CommunityDto(
     val description: String,
     val image: String? = null,
     @field:NotBlank
-    val userId: String
+    val userId: String,
 )
 
 data class PostDto(
@@ -31,7 +31,7 @@ data class PostDto(
     @field:NotBlank
     val userId: String,
     @field:NotNull
-    val communityId: Long
+    val communityId: Long,
 )
 
 data class CommentDto(
@@ -41,17 +41,17 @@ data class CommentDto(
     @field:NotBlank
     val userId: String,
     @field:NotNull
-    val postId: Long
+    val postId: Long,
 )
 
 data class LikeDto(
     val id: Long?,
     val userId: String,
-    val postId: Long
+    val postId: Long,
 )
 
 data class UserCommunityDto(
     val id: Long?,
     val userId: String,
-    val communityId: Long
+    val communityId: Long,
 )

@@ -1,11 +1,12 @@
 package com.finn.service.impl
 
-import com.finn.dto.PostDto
 import com.finn.dto.LikeDto
+import com.finn.dto.PostDto
 import com.finn.entity.Like
-import com.finn.entity.Post
 import com.finn.exception.ConflictException
 import com.finn.exception.NotFoundException
+import com.finn.mapper.toDto
+import com.finn.mapper.toEntity
 import com.finn.repository.LikeRepository
 import com.finn.repository.PostRepository
 import com.finn.repository.UserCommunityRepository
@@ -13,8 +14,6 @@ import com.finn.service.PostService
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.finn.mapper.toDto
-import com.finn.mapper.toEntity
 
 private const val PAGE_SIZE = 20
 
@@ -22,11 +21,13 @@ private const val PAGE_SIZE = 20
 class PostServiceImpl(
     private val postRepository: PostRepository,
     private val likeRepository: LikeRepository,
-    private val userCommunityRepository: UserCommunityRepository
+    private val userCommunityRepository: UserCommunityRepository,
 ) : PostService {
-
     @Transactional(readOnly = true)
-    override fun getFeed(userId: String, page: Int): List<PostDto> {
+    override fun getFeed(
+        userId: String,
+        page: Int,
+    ): List<PostDto> {
         val links = userCommunityRepository.findAllByUserId(userId)
         val commIds = links.mapNotNull { it.communityId }
         if (commIds.isEmpty()) return emptyList()
@@ -37,13 +38,19 @@ class PostServiceImpl(
     }
 
     @Transactional(readOnly = true)
-    override fun getByUser(userId: String, page: Int): List<PostDto> {
+    override fun getByUser(
+        userId: String,
+        page: Int,
+    ): List<PostDto> {
         val pageable = PageRequest.of(if (page <= 0) 0 else page - 1, PAGE_SIZE)
         return postRepository.findAllByUserIdOrderByIdDesc(userId, pageable).content.map { it.toDto() }
     }
 
     @Transactional(readOnly = true)
-    override fun getByCommunity(communityId: Long, page: Int): List<PostDto> {
+    override fun getByCommunity(
+        communityId: Long,
+        page: Int,
+    ): List<PostDto> {
         val pageable = PageRequest.of(if (page <= 0) 0 else page - 1, PAGE_SIZE)
         return postRepository.findAllByCommunityIdOrderByIdDesc(communityId, pageable).content.map { it.toDto() }
     }
@@ -61,7 +68,10 @@ class PostServiceImpl(
     }
 
     @Transactional
-    override fun update(id: Long, dto: PostDto) {
+    override fun update(
+        id: Long,
+        dto: PostDto,
+    ) {
         val post = postRepository.findById(id).orElseThrow { NotFoundException("Post not found") }
         post.content = dto.content
         post.image = dto.image
@@ -77,7 +87,10 @@ class PostServiceImpl(
     override fun likeCount(postId: Long): Int = likeRepository.countByPostId(postId)
 
     @Transactional
-    override fun giveLike(userId: String, postId: Long): LikeDto {
+    override fun giveLike(
+        userId: String,
+        postId: Long,
+    ): LikeDto {
         val existing = likeRepository.findByUserIdAndPostId(userId, postId)
         if (existing != null) throw ConflictException("Like already exists")
         val saved = likeRepository.save(Like(userId = userId, postId = postId))
@@ -85,13 +98,17 @@ class PostServiceImpl(
     }
 
     @Transactional
-    override fun removeLike(userId: String, postId: Long) {
+    override fun removeLike(
+        userId: String,
+        postId: Long,
+    ) {
         val existing = likeRepository.findByUserIdAndPostId(userId, postId)
         if (existing != null) likeRepository.delete(existing)
     }
 
     @Transactional(readOnly = true)
-    override fun hasLike(userId: String, postId: Long): Boolean = likeRepository.findByUserIdAndPostId(userId, postId) != null
-
-    private fun Post.toDto() = PostDto(id = id, content = content, image = image, userId = userId, communityId = communityId)
+    override fun hasLike(
+        userId: String,
+        postId: Long,
+    ): Boolean = likeRepository.findByUserIdAndPostId(userId, postId) != null
 }

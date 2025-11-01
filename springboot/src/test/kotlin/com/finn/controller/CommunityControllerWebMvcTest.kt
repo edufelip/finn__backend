@@ -3,6 +3,7 @@ package com.finn.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.finn.dto.CommunityDto
 import com.finn.exception.ConflictException
+import com.finn.exception.UploadValidationException
 import com.finn.service.CommunityService
 import com.finn.storage.StorageService
 import org.junit.jupiter.api.Test
@@ -18,6 +19,7 @@ import org.springframework.mock.web.MockMultipartFile
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -99,5 +101,41 @@ class CommunityControllerWebMvcTest {
         )
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.message").value("missing community payload"))
+    }
+
+    @Test
+    fun `create multipart with non png returns 500`() {
+        whenever(storageService.storePngWithChecks(any())).thenThrow(UploadValidationException("File must be .png"))
+
+        val payload =
+            objectMapper.writeValueAsString(
+                CommunityDto(id = null, title = "Invalid", description = "Desc", image = null, userId = "user"),
+            )
+
+        mockMvc.perform(
+            multipart("/communities")
+                .file(MockMultipartFile("community", "logo.jpg", MediaType.IMAGE_JPEG_VALUE, ByteArray(10)))
+                .param("community", payload),
+        )
+            .andExpect(status().isInternalServerError)
+            .andExpect(content().string("File must be .png"))
+    }
+
+    @Test
+    fun `create multipart with oversized file returns 500`() {
+        whenever(storageService.storePngWithChecks(any())).thenThrow(UploadValidationException("File too large"))
+
+        val payload =
+            objectMapper.writeValueAsString(
+                CommunityDto(id = null, title = "Big", description = "Desc", image = null, userId = "user"),
+            )
+
+        mockMvc.perform(
+            multipart("/communities")
+                .file(MockMultipartFile("community", "logo.png", MediaType.IMAGE_PNG_VALUE, ByteArray(400 * 1024)))
+                .param("community", payload),
+        )
+            .andExpect(status().isInternalServerError)
+            .andExpect(content().string("File too large"))
     }
 }

@@ -12,14 +12,10 @@ data class User(
     @Id
     @Column(name = "id", nullable = false)
     val id: String,
-
     @Column(name = "name", nullable = false)
     var name: String,
-
     @Column(name = "photo")
     var photo: String? = null,
-
     @Column(name = "date")
-    var date: OffsetDateTime? = null
+    var date: OffsetDateTime? = null,
 )
-

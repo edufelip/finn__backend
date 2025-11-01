@@ -1,54 +1,69 @@
 package com.finn.controller
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.finn.dto.CommunityDto
 import com.finn.service.CommunityService
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.finn.storage.StorageService
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
-import jakarta.validation.Valid
-import org.springframework.http.MediaType
-import org.springframework.web.multipart.MultipartFile
 import jakarta.servlet.http.HttpServletRequest
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import jakarta.validation.Valid
+import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RequestPart
+import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/communities")
 class CommunityController(
     private val communityService: CommunityService,
     private val storage: StorageService,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
 ) {
-
     @GetMapping
-    fun list(@RequestParam(required = false) search: String?): ResponseEntity<List<CommunityDto>> =
-        ResponseEntity.ok(communityService.list(search))
+    fun list(
+        @RequestParam(required = false) search: String?,
+    ): ResponseEntity<List<CommunityDto>> = ResponseEntity.ok(communityService.list(search))
 
     @GetMapping("/users/{id}")
-    fun byUser(@PathVariable id: String): ResponseEntity<List<CommunityDto>> =
-        ResponseEntity.ok(communityService.listByUser(id))
+    fun byUser(
+        @PathVariable id: String,
+    ): ResponseEntity<List<CommunityDto>> = ResponseEntity.ok(communityService.listByUser(id))
 
     @GetMapping("/{id}")
-    fun one(@PathVariable id: Long): ResponseEntity<CommunityDto> = ResponseEntity.ok(communityService.getOne(id))
+    fun one(
+        @PathVariable id: Long,
+    ): ResponseEntity<CommunityDto> = ResponseEntity.ok(communityService.getOne(id))
 
     @GetMapping("/{id}/subscribers")
-    fun subscribers(@PathVariable id: Long): ResponseEntity<Int> = ResponseEntity.ok(communityService.subscribersCount(id))
+    fun subscribers(
+        @PathVariable id: Long,
+    ): ResponseEntity<Int> = ResponseEntity.ok(communityService.subscribersCount(id))
 
     @GetMapping("/{communityId}/users/{userId}")
-    fun subscription(@PathVariable communityId: Long, @PathVariable userId: String): ResponseEntity<Any?> =
-        ResponseEntity.ok(communityService.subscription(userId, communityId))
+    fun subscription(
+        @PathVariable communityId: Long,
+        @PathVariable userId: String,
+    ): ResponseEntity<Any?> = ResponseEntity.ok(communityService.subscription(userId, communityId))
 
     @PostMapping
-    fun create(@Valid @RequestBody dto: CommunityDto): ResponseEntity<CommunityDto> =
-        ResponseEntity.status(HttpStatus.CREATED).body(communityService.create(dto))
+    fun create(
+        @Valid @RequestBody dto: CommunityDto,
+    ): ResponseEntity<CommunityDto> = ResponseEntity.status(HttpStatus.CREATED).body(communityService.create(dto))
 
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun createMultipart(
         request: HttpServletRequest,
-        @RequestPart("community", required = false) file: MultipartFile?
+        @RequestPart("community", required = false) file: MultipartFile?,
     ): ResponseEntity<CommunityDto> {
         val payload = request.getParameter("community") ?: throw IllegalArgumentException("missing community payload")
         val baseDto: CommunityDto = objectMapper.readValue(payload, CommunityDto::class.java)
@@ -59,13 +74,19 @@ class CommunityController(
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @Valid @RequestBody dto: CommunityDto): ResponseEntity<Void> {
+    fun update(
+        @PathVariable id: Long,
+        @Valid @RequestBody dto: CommunityDto,
+    ): ResponseEntity<Void> {
         communityService.update(id, dto)
         return ResponseEntity.noContent().build()
     }
 
     @PutMapping("/{id}/image")
-    fun updateImage(@PathVariable id: Long, @RequestParam image: String): ResponseEntity<Void> {
+    fun updateImage(
+        @PathVariable id: Long,
+        @RequestParam image: String,
+    ): ResponseEntity<Void> {
         communityService.updateImage(id, image)
         return ResponseEntity.noContent().build()
     }
@@ -80,17 +101,24 @@ class CommunityController(
     }
 
     @PostMapping("/subscribe")
-    fun subscribe(@RequestParam("user_id") userId: String, @RequestParam("community_id") communityId: Long) =
-        ResponseEntity.status(HttpStatus.CREATED).body(communityService.subscribe(userId, communityId))
+    fun subscribe(
+        @RequestParam("user_id") userId: String,
+        @RequestParam("community_id") communityId: Long,
+    ) = ResponseEntity.status(HttpStatus.CREATED).body(communityService.subscribe(userId, communityId))
 
     @PostMapping("/unsubscribe")
-    fun unsubscribe(@RequestParam("user_id") userId: String, @RequestParam("community_id") communityId: Long): ResponseEntity<Void> {
+    fun unsubscribe(
+        @RequestParam("user_id") userId: String,
+        @RequestParam("community_id") communityId: Long,
+    ): ResponseEntity<Void> {
         communityService.unsubscribe(userId, communityId)
         return ResponseEntity.noContent().build()
     }
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+    fun delete(
+        @PathVariable id: Long,
+    ): ResponseEntity<Void> {
         communityService.delete(id)
         return ResponseEntity.noContent().build()
     }

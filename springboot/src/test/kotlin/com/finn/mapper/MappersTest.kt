@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class MappersTest {
-
     @Test
     fun `user entity to dto and back`() {
         val entity = User(id = "u1", name = "Alice", photo = "p.png")
@@ -47,4 +46,3 @@ class MappersTest {
         assertEquals(dto.postId, dto2.postId)
     }
 }
-

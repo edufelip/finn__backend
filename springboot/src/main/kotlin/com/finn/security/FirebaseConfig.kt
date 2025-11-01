@@ -21,23 +21,25 @@ class FirebaseConfig {
 
     private fun buildOptions(): FirebaseOptions? {
         return try {
-            val credentials: GoogleCredentials? = when {
-                // 1) JSON content in env var FIREBASE_SERVICE_ACCOUNT (base64 or raw JSON)
-                System.getenv("FIREBASE_SERVICE_ACCOUNT") != null -> {
-                    val raw = System.getenv("FIREBASE_SERVICE_ACCOUNT")
-                    val decoded = try {
-                        java.util.Base64.getDecoder().decode(raw)
-                    } catch (_: Exception) {
-                        raw!!.toByteArray(StandardCharsets.UTF_8)
+            val credentials: GoogleCredentials? =
+                when {
+                    // 1) JSON content in env var FIREBASE_SERVICE_ACCOUNT (base64 or raw JSON)
+                    System.getenv("FIREBASE_SERVICE_ACCOUNT") != null -> {
+                        val raw = System.getenv("FIREBASE_SERVICE_ACCOUNT")
+                        val decoded =
+                            try {
+                                java.util.Base64.getDecoder().decode(raw)
+                            } catch (_: Exception) {
+                                raw!!.toByteArray(StandardCharsets.UTF_8)
+                            }
+                        GoogleCredentials.fromStream(ByteArrayInputStream(decoded))
                     }
-                    GoogleCredentials.fromStream(ByteArrayInputStream(decoded))
+                    // 2) GOOGLE_APPLICATION_CREDENTIALS points to JSON file
+                    System.getenv("GOOGLE_APPLICATION_CREDENTIALS") != null -> {
+                        GoogleCredentials.fromStream(File(System.getenv("GOOGLE_APPLICATION_CREDENTIALS")).inputStream())
+                    }
+                    else -> null
                 }
-                // 2) GOOGLE_APPLICATION_CREDENTIALS points to JSON file
-                System.getenv("GOOGLE_APPLICATION_CREDENTIALS") != null -> {
-                    GoogleCredentials.fromStream(File(System.getenv("GOOGLE_APPLICATION_CREDENTIALS")).inputStream())
-                }
-                else -> null
-            }
             credentials?.let {
                 FirebaseOptions.builder()
                     .setCredentials(it)
@@ -48,4 +50,3 @@ class FirebaseConfig {
         }
     }
 }
-

@@ -4,18 +4,17 @@ import com.finn.dto.UserDto
 import com.finn.entity.User
 import com.finn.exception.ConflictException
 import com.finn.exception.NotFoundException
+import com.finn.mapper.toDto
+import com.finn.mapper.toEntity
 import com.finn.repository.UserRepository
 import com.finn.service.UserService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.finn.mapper.toDto
-import com.finn.mapper.toEntity
 
 @Service
 class UserServiceImpl(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : UserService {
-
     @Transactional(readOnly = true)
     override fun getUser(id: String): UserDto {
         val user = userRepository.findById(id).orElseThrow { NotFoundException("User not found") }
@@ -30,7 +29,10 @@ class UserServiceImpl(
     }
 
     @Transactional
-    override fun updateUser(id: String, name: String) {
+    override fun updateUser(
+        id: String,
+        name: String,
+    ) {
         val user = userRepository.findById(id).orElseThrow { NotFoundException("User not found") }
         user.name = name
         userRepository.save(user)

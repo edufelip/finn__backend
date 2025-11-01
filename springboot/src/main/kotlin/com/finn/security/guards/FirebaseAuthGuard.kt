@@ -12,9 +12,12 @@ import org.springframework.stereotype.Component
 @Component
 class FirebaseAuthGuard(
     @Value("\${security.disableAuth:false}") private val disableAuth: Boolean,
-    private val verifier: IdTokenVerifier
+    private val verifier: IdTokenVerifier,
 ) : Guard {
-    override fun check(request: HttpServletRequest, response: HttpServletResponse): Boolean {
+    override fun check(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+    ): Boolean {
         if (disableAuth) return true
         val authHeader = request.getHeader("Authorization")
         if (authHeader?.startsWith("Bearer ") == true) {

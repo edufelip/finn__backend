@@ -1,27 +1,23 @@
 package com.finn.service.impl
 
 import com.finn.dto.CommentDto
-import com.finn.entity.Comment
 import com.finn.exception.NotFoundException
+import com.finn.mapper.toDto
+import com.finn.mapper.toEntity
 import com.finn.repository.CommentRepository
 import com.finn.service.CommentService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.finn.mapper.toDto
-import com.finn.mapper.toEntity
 
 @Service
 class CommentServiceImpl(
-    private val commentRepository: CommentRepository
+    private val commentRepository: CommentRepository,
 ) : CommentService {
+    @Transactional(readOnly = true)
+    override fun getByPost(postId: Long): List<CommentDto> = commentRepository.findAllByPostIdOrderByIdDesc(postId).map { it.toDto() }
 
     @Transactional(readOnly = true)
-    override fun getByPost(postId: Long): List<CommentDto> =
-        commentRepository.findAllByPostIdOrderByIdDesc(postId).map { it.toDto() }
-
-    @Transactional(readOnly = true)
-    override fun getByUser(userId: String): List<CommentDto> =
-        commentRepository.findAllByUserIdOrderByIdDesc(userId).map { it.toDto() }
+    override fun getByUser(userId: String): List<CommentDto> = commentRepository.findAllByUserIdOrderByIdDesc(userId).map { it.toDto() }
 
     @Transactional(readOnly = true)
     override fun getOne(id: Long): CommentDto {
@@ -36,7 +32,10 @@ class CommentServiceImpl(
     }
 
     @Transactional
-    override fun update(id: Long, dto: CommentDto) {
+    override fun update(
+        id: Long,
+        dto: CommentDto,
+    ) {
         val c = commentRepository.findById(id).orElseThrow { NotFoundException("Comment not found") }
         c.content = dto.content
         commentRepository.save(c)
@@ -46,6 +45,4 @@ class CommentServiceImpl(
     override fun delete(id: Long) {
         commentRepository.deleteById(id)
     }
-
-    private fun Comment.toDto() = CommentDto(id = id, content = content, userId = userId, postId = postId)
 }

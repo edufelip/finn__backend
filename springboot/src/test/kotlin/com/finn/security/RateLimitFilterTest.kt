@@ -9,7 +9,6 @@ import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.mock.web.MockHttpServletResponse
 
 class RateLimitFilterTest {
-
     @Test
     fun `rate limiter allows up to rpm then returns 429`() {
         val filter = RateLimitFilter(rpm = 2, disableAuth = false)
@@ -34,4 +33,3 @@ class RateLimitFilterTest {
         assertEquals(2, proceedCount)
     }
 }
-

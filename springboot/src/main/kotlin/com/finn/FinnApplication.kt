@@ -9,4 +9,3 @@ class FinnApplication
 fun main(args: Array<String>) {
     runApplication<FinnApplication>(*args)
 }
-

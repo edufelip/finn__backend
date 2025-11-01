@@ -9,9 +9,13 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 class RequestGuardsFilter(
-    private val guards: List<Guard>
+    private val guards: List<Guard>,
 ) : OncePerRequestFilter() {
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        chain: FilterChain,
+    ) {
         for (guard in guards) {
             if (!guard.check(request, response)) {
                 return
@@ -20,4 +24,3 @@ class RequestGuardsFilter(
         chain.doFilter(request, response)
     }
 }
-

@@ -15,7 +15,6 @@ import org.springframework.mock.web.MockMultipartFile
 import java.util.*
 
 class CommunityServiceImageUpdateTest {
-
     @Test
     fun `updateImageWithStorage stores new image updates db and deletes old`() {
         val communityRepository = mockk<CommunityRepository>(relaxed = true)

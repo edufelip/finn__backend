@@ -10,9 +10,12 @@ class AppHeaderGuard(
     @Value("\${security.requireAppHeader:true}") private val requireAppHeader: Boolean,
     @Value("\${security.app.allowedPackage:com.edufelip.finn}") private val allowedPackage: String,
     @Value("\${security.app.allowedUserAgentContains:okhttp}") private val allowedUserAgentContains: String,
-    @Value("\${security.disableAuth:false}") private val disableAuth: Boolean
+    @Value("\${security.disableAuth:false}") private val disableAuth: Boolean,
 ) : Guard {
-    override fun check(request: HttpServletRequest, response: HttpServletResponse): Boolean {
+    override fun check(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+    ): Boolean {
         if (!requireAppHeader || disableAuth) return true
         val appHeader = request.getHeader("X-App-Package")
         val userAgent = request.getHeader("User-Agent") ?: ""
@@ -26,4 +29,3 @@ class AppHeaderGuard(
         return true
     }
 }
-

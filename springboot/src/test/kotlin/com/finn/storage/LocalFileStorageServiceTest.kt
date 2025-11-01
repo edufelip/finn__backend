@@ -9,7 +9,6 @@ import java.io.File
 import java.nio.file.Path
 
 class LocalFileStorageServiceTest {
-
     @TempDir
     lateinit var tmp: Path
 
@@ -40,4 +39,3 @@ class LocalFileStorageServiceTest {
         assertEquals("File too large", ex.message)
     }
 }
-
