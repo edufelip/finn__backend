@@ -14,10 +14,11 @@ else
   echo "No .env file found; using current shell environment" >&2
 fi
 
+export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-default}"
+
 CMD="./gradlew"
 if [ ! -x "$CMD" ]; then
   CMD="gradle"
 fi
 
 exec "$CMD" bootRun
-
