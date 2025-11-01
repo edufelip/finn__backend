@@ -1,39 +1,54 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `src/`: application code. Entry points: `src/server.ts`, `src/index.ts`.
-  - `config/` (e.g., `multer.ts`), `infra/` (DB), `routes/`, `service/`, `data/`, `models/`, `interfaces/`, `test/` (Jest specs and assets).
-- `database/create.sql`: bootstrap schema for local/dev databases.
-- `public/`: runtime upload target (create locally if missing).
+- Spring Boot + Kotlin application lives under `springboot/`.
+- Application sources: `springboot/src/main/kotlin/com/finn/`
+  - `config/`, `security/`, `controller/`, `service/`, `repository/`, `entity/`, `dto/`, `mapper/`, `exception/`, `storage/`.
+- Shared resources: `springboot/src/main/resources/`
+  - `application.yml` holds profile-specific configuration and env placeholders.
+  - `db/migration/` contains Flyway SQL migrations.
+- Tests: `springboot/src/test/kotlin/com/finn/` (JUnit 5 + MockK + Spring Boot test slices).
+- File uploads default to `public/` (relative to repo root). Create the directory locally if missing.
+- Legacy Node artifacts were removed; use these Spring Boot modules for any new work.
 
 ## Build, Test, and Development Commands
-- `yarn` — install dependencies.
-- `yarn dev` — run API locally via `ts-node-dev` on `src/server.ts` (default http://localhost:3333).
-- `yarn test` — run Jest (TypeScript preset). Uses `jestSetup.js` to set `TEST_MODE=true` and connect to `DEVDB_NAME`.
-- `yarn build` — transpile to `dist/` with Babel. Run with `node dist/server.js`.
+- Install prerequisites: Java 17+, Docker (for Testcontainers), and either Gradle 8+ or the bundled wrapper.
+- Preferred local run: `./springboot/run-local.sh` (loads `springboot/.env` if present, defaults `SPRING_PROFILES_ACTIVE=default`, starts `bootRun` on http://localhost:8080 using the cloud dev DB).
+- Manual options (from `springboot/`):
+  - `SPRING_PROFILES_ACTIVE=default ./gradlew bootRun` → cloud dev database (`finn_dev`)
+  - `SPRING_PROFILES_ACTIVE=local-db ./gradlew bootRun` → locally running Postgres (configure `LOCAL_DB_*`)
+  - `SPRING_PROFILES_ACTIVE=prod ./gradlew bootRun` → cloud production database (`finn_prod`)
+  - `SPRING_PROFILES_ACTIVE=local ./gradlew bootRun` → in-memory H2 sandbox
+- Build artifacts: `cd springboot && ./gradlew build` (outputs JAR under `build/libs/`).
+- Tests: `./springboot/run-tests.sh` (loads env + runs `./gradlew test` with Testcontainers). You can also call `./gradlew test` directly when env vars are exported.
+- Linting/formatting: apply Kotlin conventions (ktlint is not yet wired; follow IntelliJ defaults).
 
 ## Coding Style & Naming Conventions
-- Language: TypeScript. Indentation: 2 spaces. Imports prefer path aliases (`@models/*`, `@service/*`, `@data/*`, `@interfaces/*`).
-- ESLint: Standard config (`.eslintrc.json`); several rules relaxed (e.g., `camelcase`, `no-unused-vars`).
-- Filenames: Models use `PascalCase` (e.g., `UserModel.ts`), services/routes use `camelCase`, interfaces are prefixed with `I` (e.g., `IUserMethods.ts`).
-- Lint locally with: `npx eslint . --ext .ts`.
+- Language: Kotlin. Indent with 4 spaces; keep one class/declaration per file.
+- Package naming: lowercase, feature-based (`com.finn.controller`, `com.finn.service.impl`, etc.).
+- Classes/interfaces: suffix according to role (`*Controller`, `*Service`, `*Repository`, `*Entity`, `*Dto`).
+- Spring annotations follow constructor-based injection (`@Service class FooService(private val repo: BarRepository)`).
+- Prefer data classes for DTOs and entities where appropriate; use sealed types for domain hierarchies.
+- Leverage Kotlin null-safety and `Result`/exception handling instead of nullable gymnastics.
 
 ## Testing Guidelines
-- Framework: Jest (`ts-jest`) + `supertest`. Tests live in `src/test` and follow `*.spec.ts`.
-- DB: Tests toggle `TEST_MODE=true` and will target `process.env.DEVDB_NAME`. Ensure this database exists and credentials are set in `.env`.
-- Schema: Tests often create/drop tables; for fresh setups, apply `database/create.sql` to your dev DBs.
-- Coverage outputs to `coverage/`. Keep new/changed code covered with meaningful assertions.
+- Primary stack: JUnit 5 + MockK + Spring Boot Test + Testcontainers (PostgreSQL).
+- Tests live under `springboot/src/test/kotlin/com/finn/` and mirror the main package structure.
+- Scripts (`run-tests.sh`) automatically load `springboot/.env`; ensure `DEVDB_NAME` and DB credentials are set for Testcontainers overrides.
+- Integration tests spin up ephemeral Postgres instances; keep assertions deterministic and clean up any storage artifacts.
+- For new features, cover controllers (MockMvc), services, and repositories as needed; include regression tests for bug fixes.
 
 ## Commit & Pull Request Guidelines
-- Commits: concise, imperative present (e.g., "add user lookup", "fix trending query"). Group related changes; avoid noisy mix-ins.
-- PRs must include:
-  - Clear description, rationale, and testing notes (cURL/Postman examples for new/changed endpoints).
-  - Linked issue (if any) and screenshots for API responses where useful.
-  - Updated tests and docs when routes, schema, or behavior change.
-  - Passing CI (lint/tests) and no TypeScript errors.
+- Commits: concise, imperative present (e.g., "add community image upload flow"). Keep related changes together.
+- PR requirements:
+  - Explain the change, include rationale, and document testing (curl/Postman examples for API updates).
+  - Link issues as applicable and attach screenshots/log snippets when they aid reviewers.
+  - Update tests, migrations, and docs when behavior or schema shifts.
+  - Ensure CI (build + tests) passes and code compiles with no Kotlin/Gradle warnings.
 
 ## Security & Configuration Tips
-- Copy `.env.example` to `.env` and fill `DB_*` and `DEVDB_NAME`. Never commit secrets.
-- File uploads: `multer` stores to `./public/`, enforces `.png` and ~300KB limit.
-- Use a separate dev/test database to avoid data collisions.
-
+- Copy `springboot/.env.example` to `springboot/.env` for local development; never commit secrets.
+- Required env vars (Spring placeholders): `DB_HOST`, `DB_PORT`, `DB_NAME`, `DEVDB_NAME`, `DB_USER`, `DB_PASSWORD`.
+- Firebase Admin credentials: either set `FIREBASE_SERVICE_ACCOUNT` (raw/base64 JSON) or point `GOOGLE_APPLICATION_CREDENTIALS` to a local file path.
+- Security toggles (for local-only experiments) live in `.env`: `SECURITY_REQUIRE_APPHEADER`, `SECURITY_REQUIRE_APPCHECK`, `SECURITY_DISABLEAUTH`. Keep them enabled in shared environments.
+- File uploads are stored via `LocalFileStorageService` under `public/`; respect size/type constraints enforced in the service layer.

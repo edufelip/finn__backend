@@ -42,8 +42,16 @@ For the API to work properly the following values are required (read by Spring B
 ## Spring Boot API (Kotlin)
 Location: `springboot/`
 
-Environment
+-Environment
 - DB vars: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DEVDB_NAME`, `DB_USER`, `DB_PASSWORD`
+- Copy `springboot/.env.example` to `springboot/.env` and populate it with the remote development database connection (host value supplied via your secret store or `.env`), port `5432`. The committed `.env.example` is a skeleton only.
+- Update your local SSH config with the host you deploy to:
+  ```
+  Host finn-backend
+    HostName <vm-ip-address>
+    User <your_vm_user>
+    IdentityFile ~/.ssh/<your_key>
+  ```
 - Firebase Admin: set either `FIREBASE_SERVICE_ACCOUNT` (raw or base64 JSON) or `GOOGLE_APPLICATION_CREDENTIALS=/path/to/serviceAccount.json`
 - Security flags (application.yml):
   - `security.requireAppHeader` (default true)
@@ -55,10 +63,13 @@ Run
 ```
 cd springboot
 # Option 1: load env from springboot/.env automatically
-./run-local.sh
+./run-local.sh   # defaults to SPRING_PROFILES_ACTIVE=default (cloud dev via direct IP)
 
 # Option 2: run directly (export env in your shell first)
-gradle bootRun   # or ./gradlew bootRun
+SPRING_PROFILES_ACTIVE=default ./gradlew bootRun   # cloud dev DB (finn_dev using remote Postgres)
+SPRING_PROFILES_ACTIVE=local-db ./gradlew bootRun  # local Postgres (LOCAL_DB_* env vars)
+SPRING_PROFILES_ACTIVE=prod ./gradlew bootRun      # cloud production DB (finn_prod)
+SPRING_PROFILES_ACTIVE=local ./gradlew bootRun     # in-memory H2 sandbox
 ```
 API runs at http://localhost:8080. Swagger UI: http://localhost:8080/swagger-ui/index.html
 
@@ -165,6 +176,29 @@ Client (Android)
 - Tests:
   - Service integration: `springboot/src/test/kotlin/com/finn/IntegrationTests.kt`
   - API parity (MockMvc): `springboot/src/test/kotlin/com/finn/ApiParityTests.kt`
+
+## Infrastructure & Operations
+- **Runtime host**: Linux VM (Ubuntu 22.04) provisioned on your infrastructure provider (GCP, AWS, Azure, etc.). Configure a local SSH alias (e.g., `Host finn-backend`) pointing to the active public IP.
+- **Process manager**: PM2 runs via systemd unit `pm2-finnbackend.service` (enabled). Commands:
+  - Check status: `sudo systemctl status pm2-finnbackend`
+  - View process list: `sudo -u finnbackend pm2 status`
+  - Reload after deploy: `sudo -u finnbackend pm2 restart finn-backend --update-env` then `sudo -u finnbackend pm2 save`
+- **App bootstrap**: `/opt/finn-backend/run.sh` pulls secrets, loads env, then launches the jar at `/opt/finn-backend/repo/springboot/build/libs/finn-backend-kotlin-0.1.0.jar`.
+- **Secrets**: Runtime variables are sourced from a cloud secret manager into `/opt/finn-backend/.env.generated` by `/opt/finn-backend/scripts/load_env_from_secrets.sh`. After rotating a secret (e.g., with `gcloud secrets versions add`, `aws secretsmanager put-secret-value`, etc.), rerun the loader and restart PM2 so the app receives the new values. The fallback `.env` stores only non-sensitive overrides.
+- **Logs**: PM2 streams under `/var/log/finn-backend/pm2-out.log` and `/var/log/finn-backend/pm2-error.log`. Use `sudo tail -f` or `sudo -u finnbackend pm2 logs finn-backend --lines 100`.
+- **Database (Docker)**: Postgres 15 runs in a Docker container named `finn-postgres` on the same VM. Management commands:
+  - Status: `sudo docker ps` (look for `postgres:15` image / `finn-postgres` name)
+  - Logs: `sudo docker logs --tail 100 finn-postgres`
+  - Exec shell: `sudo docker exec -it finn-postgres psql -U <db_user> -d <db_name>`
+  Port 5432 is published externally (IPv4/IPv6). UFW currently allows ports 22, 80, 443, and 5432—restrict sources before exposing to the public Internet.
+- **PM2 & Docker interplay**: PM2’s systemd unit starts before Docker; ensure the database container uses a restart policy such as `--restart unless-stopped` so it becomes available before Spring Boot initialises. If you run PM2 inside Docker instead, mirror the steps in a compose/service definition.
+- **Monitoring & alerts**: Uptime Kuma (Docker) listens at `127.0.0.1:3001`; forward with `ssh -L 3001:127.0.0.1:3001 googlecloud` to manage monitors (Telegram notifications configured).
+- **Health checks**: `/healthz` is protected by App Check. For manual probes, include the `X-Firebase-AppCheck` header or temporarily toggle `SECURITY_REQUIRE_APPCHECK=false` in the environment.
+- **Deploy refresher**:
+  1. `ssh googlecloud`
+  2. `sudo -u finnbackend bash -lc 'cd /opt/finn-backend/repo/springboot && ./gradlew bootJar'`
+  3. `sudo -u finnbackend pm2 restart finn-backend --update-env`
+  4. `sudo -u finnbackend pm2 save`
 
 ## Maintainers
 This project is mantained by:
